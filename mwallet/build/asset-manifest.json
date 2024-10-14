@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2f6aaa06.css",
+    "main.js": "/static/js/main.2a76aae9.js",
+    "static/media/usdc.png": "/static/media/usdc.c4477cfcf6565cacc68b.png",
+    "static/media/wallet.png": "/static/media/wallet.7b5a9599ea2b886d6747.png",
+    "static/media/mwallet.png": "/static/media/mwallet.c01b55c403a176df4aa2.png",
+    "static/media/Solana_logo.png": "/static/media/Solana_logo.40621cec0c4c39fbba45.png",
+    "static/media/noImg.png": "/static/media/noImg.c8524b4819bc2c88e490.png",
+    "index.html": "/index.html",
+    "main.2f6aaa06.css.map": "/static/css/main.2f6aaa06.css.map",
+    "main.2a76aae9.js.map": "/static/js/main.2a76aae9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2f6aaa06.css",
+    "static/js/main.2a76aae9.js"
+  ]
+}
