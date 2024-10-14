@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import img from "../images/wallet.png";
-import trap from '../images/trap.svg'
+import trap from '../images/trap.webp'
 import edit from '../images/edit.svg'
 import key from '../images/key.svg'
 import cloud from '../images/cloud.svg'
