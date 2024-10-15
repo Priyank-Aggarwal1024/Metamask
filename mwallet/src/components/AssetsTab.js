@@ -23,8 +23,8 @@ function AssetsTab({ tokens }) {
                       item.symbol === "SOL"
                         ? SOL
                         : item.symbol === "USDC"
-                        ? USDC
-                        : item.logo || logo
+                          ? USDC
+                          : item.logo || logo
                     }
                   />
                 }

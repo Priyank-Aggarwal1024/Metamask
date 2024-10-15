@@ -689,9 +689,17 @@ header {
   width: 350px;
 }
 
-.ant-select-selector.select-wallet {
+.ant-select.select-wallet {
   background-color: #8E6FFF;
   border: 0.8px solid #7B65CB;
+}
+
+.ant-select>div {
+  background-color: #8E6FFF;
+}
+
+.select-wallet .ant-select-selector.ant-select-selector {
+  background-color: #8E6FFF;
 }
 
 .select-wallet .ant-select-selection-item {

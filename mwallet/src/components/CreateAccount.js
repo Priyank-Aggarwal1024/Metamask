@@ -14,12 +14,13 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
   const navigate = useNavigate();
   const [mnemonic, setMnemonic] = useState(null);
   const [loading, setLoading] = useState(false);
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const [arr, setArr] = useState(mnemonic?.split(" "));
   const handleMnemonic = () => {
     const inp = document.querySelectorAll(".input-mnemonic");
     let str = "";
     inp.forEach(item => {
       str += item.value;
+      str += " ";
     })
     setMnemonic(str);
   }
@@ -27,6 +28,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
   async function generateWallet() {
     const newMnemonic = bip39.generateMnemonic();
     setMnemonic(newMnemonic);
+    setArr(newMnemonic?.split(" "))
     const seed = await bip39.mnemonicToSeed(newMnemonic);
     const derived = derivePath("m/44'/501'/0'/0'", seed.toString("hex")).key;
 
@@ -60,7 +62,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
 
   }
 
-
+  console.log(mnemonic)
 
   return (
     <>
@@ -97,9 +99,9 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
           </Button>
           <div className="grid grid-cols-3 gap-[7px] py-4 w-full px-4">
             {
-              arr.map((item, idx) => <div className="py-2.5 px-2  bg-[#080808]  border-[0.8px] border-[#1D1D1D] rounded-[8px] flex gap-1" key={idx}>
-                <span className="block text-[#474747] text-[12px] ">{item}.</span>
-                <input className="block w-full font-urbanist tetx-[14px] text-white bg-transparent outline-none border-none input-mnemonic" onChange={handleMnemonic} />
+              arr?.map((item, idx) => <div className="py-2.5 px-2  bg-[#080808]  border-[0.8px] border-[#1D1D1D] rounded-[8px] flex gap-1 items-center" key={idx}>
+                <span className="block text-[#474747] text-[12px] ">{idx + 1}.</span>
+                <input className="block w-full font-urbanist tetx-[14px] text-white bg-transparent outline-none border-none input-mnemonic" onChange={handleMnemonic} value={item} readOnly />
 
               </div>)
             }

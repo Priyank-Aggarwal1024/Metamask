@@ -7,6 +7,10 @@ import { Connection, PublicKey, SystemProgram, Transaction, Keypair, LAMPORTS_PE
 import bs58 from "bs58";
 import { CHAINS_CONFIG } from "../chains";
 import TwoFactorAuth from "./TwoFactorAuth";
+import sol from '../images/Solana_logo.png';
+import calender from '../images/calender.svg'
+import scan from '../images/scan.svg'
+import ibutton from '../images/ibutton.svg'
 
 function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
   const [sendToAddress, setSendToAddress] = useState("");
@@ -20,7 +24,14 @@ function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
   const [expandedTransaction, setExpandedTransaction] = useState(null);
 
 
-  const transactionHistory = JSON.parse(localStorage.getItem(wallet) || "[]");
+  const transactionHistory = JSON.parse(localStorage.getItem(wallet)) || [{
+    "amount": "1",
+    "signature": "482b95ue7B6sm7QPkPNzz9oQUZgEu33RQSsmX3GRQ5zGFoAHGxgBTJmEF1UAGj5aFb4oeiiT1QechbUKkkZb1bDe",
+    "toAddress": "3s5WyaMc3zazyusTRVN7atCCSw7HCbiV6MRAb9hdZbqL",
+    "token": "SOL",
+    "type": "Sent",
+    "dateTime": "2024-10-14 17:42:55"
+  }];
 
   const verifyPasswordAndSend = async () => {
     const storedPassword = JSON.parse(localStorage.getItem("pinSetup") || "{}")[wallet];
@@ -143,31 +154,42 @@ function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
 
   return (
     <>
-      <div className="sendRow">
-        <p style={{ width: "90px", textAlign: "left", color: "white" }}> To:</p>
+      <div className="w-full flex justify-center pb-5">
+        <div className="py-1 px-2 flex item-center gap-1 rounded-[10px] border-[0.8px] border-[#1D1D1D]">
+          <img src={sol} alt="Solana" className="w-[22px] h-[22px]" />
+          <div className="text-center text-white text-[15px] font-normal font-urbanist leading-[21px]">Solana</div>
+        </div>
+      </div>
+      <input className="text-center text-white text-[40px] font-bold font-['Urbanist'] leading-[18px] pb-[15px] border-none outline-none bg-transparent flex max-w-full"
+        placeholder="10.50 SOL"
+        value={amountToSend}
+        onChange={(e) => setAmountToSend(e.target.value)}
+      />
+      <div className="text-center text-[#474747] text-lg font-normal font-['Urbanist'] leading-[18px]"
+      >$1,575 USD</div>
+
+
+      <div className="pt-8">
+        <div className="flex justify-between pb-2">
+          <div className="text-[#a8a8a8] text-[13px] font-normal font-['Urbanist'] leading-[18px]">To</div>
+          <div className="w-[48px] h-[17px] justify-start items-center gap-3 flex">
+            <img src={calender} alt="Calender" />
+            <img src={scan} alt="scan" />
+          </div>
+        </div>
         <Input
           value={sendToAddress}
           onChange={(e) => setSendToAddress(e.target.value)}
           placeholder="Enter Receiving Address"
-          className="input"
+          className="input h-12"
           style={{ backgroundColor: "black", color: "white" }}
         />
+        <div className="w-full bg-[#0b0514] rounded-lg text-[#722ae8] text-[13px] font-medium font-urbanist leading-[15px] py-[15px] px-2.5 flex items-center gap-2 mt-2.5">
+          <img src={ibutton} alt="ibutton" />
+          <p className="text-start">Kindly ensure that the receiving address supports the Solana network</p>
+        </div>
       </div>
-      <div className="sendRow">
-        <p style={{ width: "90px", textAlign: "left", color: "white" }}> Amount:</p>
-        <Input
-          value={amountToSend}
-          onChange={(e) => setAmountToSend(e.target.value)}
-          placeholder="Amount"
-          className="input"
-          style={{ backgroundColor: "black", color: "white" }}
-        />
-      </div>
-      <div className="flex w-full justify-between mt-5"> <p className="text-white text-start">Available Balance:</p> <p className="font-bold text-white">{balance}</p> </div>
-      <div className="flex w-full justify-between mt-4">
-        <p className="text-white text-start">Fees @ 0.5% :</p>
-        <p className="text-white">{amountToSend * 0.05}</p>
-      </div>
+      <div className="flex w-full justify-end mt-[15px] gap-1"> <p className="text-[#A8A8A8] text-start">Available Balance:</p> <p className="font-bold text-white">{balance}</p> </div>
       <Button
         className="frontPageButton1"
         style={{ width: "100%", marginTop: "20px", marginBottom: "20px" }}
@@ -187,7 +209,7 @@ function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
         }}
         disabled={processing || !sendToAddress}
       >
-        Send Tokens
+        Proceed
       </Button>
       {show2FA && (
         <TwoFactorAuth

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { BulbOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
 
 function SignInPwd({ setWallet, setSeedPhrase, setPassword }) {
     const navigate = useNavigate();
-    const { pathname } = useLocation()
-    console.log(pathname)
     const [typedSeed, setTypedSeed] = useState("");
     const [nonValid, setNonValid] = useState(false);
 

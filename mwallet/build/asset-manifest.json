@@ -1,8 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.fbfcc849.css",
-    "main.js": "/static/js/main.a6d602da.js",
-    "static/media/trap.svg": "/static/media/trap.dc956cfd5ef3099530f7c6723645250b.svg",
+    "main.js": "/static/js/main.551442de.js",
     "static/media/bonk.png": "/static/media/bonk.d54497e4fb11e8b00c7f.png",
     "static/media/usd-coin.png": "/static/media/usd-coin.c4477cfcf6565cacc68b.png",
     "static/media/usdc.png": "/static/media/usdc.c4477cfcf6565cacc68b.png",
@@ -12,6 +11,7 @@
     "static/media/Solana_logo.png": "/static/media/Solana_logo.40621cec0c4c39fbba45.png",
     "static/media/wallet.png": "/static/media/wallet.c7fb68cc53af9f7d3cc0.png",
     "static/media/noImg.png": "/static/media/noImg.c8524b4819bc2c88e490.png",
+    "static/media/trap.webp": "/static/media/trap.b129bb870ef5a074f6c2.webp",
     "static/media/asset.svg": "/static/media/asset.58449630aa7c09994004c0c289f8c3ea.svg",
     "static/media/key.svg": "/static/media/key.55636e681a353e712c0f2129832fec88.svg",
     "static/media/cloud.svg": "/static/media/cloud.bdd5e9db167e9b0283c56b1d68e95efe.svg",
@@ -24,10 +24,10 @@
     "static/media/send.svg": "/static/media/send.730d5cb9cc15f373f224efe4d6af970b.svg",
     "static/media/right-arrow.svg": "/static/media/right-arrow.4fa5e252a0ce51879203a5b1c36ee6aa.svg",
     "main.fbfcc849.css.map": "/static/css/main.fbfcc849.css.map",
-    "main.a6d602da.js.map": "/static/js/main.a6d602da.js.map"
+    "main.551442de.js.map": "/static/js/main.551442de.js.map"
   },
   "entrypoints": [
     "static/css/main.fbfcc849.css",
-    "static/js/main.a6d602da.js"
+    "static/js/main.551442de.js"
   ]
 }

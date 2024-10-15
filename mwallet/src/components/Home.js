@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import img from "../images/wallet.png";
-import trap from '../images/trap.webp'
+import trap from '../images/trap.svg'
 import edit from '../images/edit.svg'
 import key from '../images/key.svg'
 import cloud from '../images/cloud.svg'
@@ -37,7 +37,7 @@ function Home() {
   return (
     <>
       <div className={`content1 h-[500px] bg-black ${showPopup ? 'fixed inset-0' : ''}`}>
-        <img src={trap} alt="trap" className="absolute top-0 z-1" />
+        <img src={trap} alt="trap" className="absolute top-0 z-1 max-w-[350px]" />
         <img src={img} alt="logo" className="frontPageLogo mb-4 relative z-[4]" />
         <h2 className="text-white text-3xl font-bold mb-0">Metasafe</h2>
         <h4 className="text-[rgb(71,71,71)] mt-2">The Solana Non Custodial Wallet</h4>
