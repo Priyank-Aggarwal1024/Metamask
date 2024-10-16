@@ -9,7 +9,7 @@ function AssetsTab({ tokens }) {
   return (
     <>
       <div className="text-white text-left ml-2 mb-4">My Assets</div>
-      {tokens?.length != 0 ? (
+      {tokens?.length > 0 ? (
         tokens.map((item, idx) => <div className="w-full text-white bg-[#080808] flex justify-between items-center py-3 px-2 rounded-[5px]" key={idx}>
           <div className="flex items-center">
             <Avatar
