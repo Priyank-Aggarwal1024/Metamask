@@ -106,7 +106,15 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
               </div>)
             }
           </div>
+          <Button
+            className="frontPageButton1"
+            type="default"
+            onClick={() => navigator.clipboard.writeText(mnemonic)}
+            hidden={!newSeedPhrase}
 
+          >
+            Copy Your SeddPhrase
+          </Button>
           <Button
             className="frontPageButton1"
             type="default"
@@ -116,6 +124,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
           >
             Open Your New Wallet
           </Button>
+
           <p className="frontPageBottom mt-2" onClick={() => navigate("/")}>
             Back Home
           </p>

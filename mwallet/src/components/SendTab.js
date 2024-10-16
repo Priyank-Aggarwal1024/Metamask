@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Input, Button, message, Spin, Tooltip } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Connection, PublicKey, SystemProgram, Transaction, Keypair, LAMPORTS_PER_SOL, sendAndConfirmTransaction, } from "@solana/web3.js";
 import bs58 from "bs58";
@@ -21,18 +19,6 @@ function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
   const [showPin, setShowPin] = useState(false);
   const [enteredPassword, setEnteredPassword] = useState("");
   const [flag, setFlag] = useState(false);
-  const [expandedTransaction, setExpandedTransaction] = useState(null);
-
-
-  const transactionHistory = JSON.parse(localStorage.getItem(wallet)) || [{
-    "amount": "1",
-    "signature": "482b95ue7B6sm7QPkPNzz9oQUZgEu33RQSsmX3GRQ5zGFoAHGxgBTJmEF1UAGj5aFb4oeiiT1QechbUKkkZb1bDe",
-    "toAddress": "3s5WyaMc3zazyusTRVN7atCCSw7HCbiV6MRAb9hdZbqL",
-    "token": "SOL",
-    "type": "Sent",
-    "dateTime": "2024-10-14 17:42:55"
-  }];
-
   const verifyPasswordAndSend = async () => {
     const storedPassword = JSON.parse(localStorage.getItem("pinSetup") || "{}")[wallet];
     if (enteredPassword === storedPassword && flag) {
@@ -51,9 +37,7 @@ function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
   const initiate2FA = () => {
     setShow2FA(true);
   };
-  const handleItemClick = (index) => {
-    setExpandedTransaction(expandedTransaction === index ? null : index);
-  };
+
 
   const handle2FAVerification = async (otp) => {
     const payload = { userId: wallet, token: otp };
@@ -250,62 +234,6 @@ function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
             </Tooltip>
           )}
         </>
-      )}
-
-
-      <h1 className="font-bold text-white mt-3"> Tokens Sent</h1>
-      {transactionHistory.length > 0 ? (
-        <ul className="transaction-history-list bg-black">
-          {transactionHistory.slice().reverse().map((tx, index) => (
-            <li key={index} className="transaction-history-item">
-              <div
-                onClick={() => handleItemClick(index)}
-                className="transaction-summary"
-              >
-                <span>
-                  <FontAwesomeIcon
-                    icon={tx.type == "Received" || tx.type == "Swap In" ? faArrowDown : faArrowUp}
-                    className={
-                      tx.type == "Received" || tx.type == "Swap In" ? "received-icon" : "sent-icon"
-                    }
-                  />
-                  <p className="date-time">{tx.dateTime}</p>
-                </span>
-                <span>{tx.amount} {tx.token || "SOL"}</span>
-                <span>{tx.type}</span>
-              </div>
-
-              {expandedTransaction === index && (
-                <div className="transaction-details-dropdown">
-                  <p>
-                    <strong>To Address:</strong> {tx.toAddress}
-                  </p>
-                  <Tooltip
-                    title={
-                      <a
-                        href={`https://explorer.solana.com/tx/${tx.signature}?cluster=${selectedChain}`}
-                        target="_blank"
-                      >
-                        View on Solana Explorer
-                      </a>
-                    }
-                  >
-                    <p>
-                      <strong>Transaction Hash:</strong> {tx.signature}
-                    </p>
-                  </Tooltip>
-
-                  <p>
-                    <strong>Date & Time:</strong> <br />
-                    {tx.dateTime}
-                  </p>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-white">No transaction history available.</p>
       )}
     </>
 

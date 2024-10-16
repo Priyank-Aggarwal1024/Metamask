@@ -13,10 +13,15 @@ import SecurityTab from "./SecurityTab";
 import SwapTab from "./SwapTab";
 import send from "../images/send.svg";
 import swap from "../images/swap.svg";
-import security from "../images/security.png";
+import swap3 from "../images/swap3.svg";
+import fillswap from "../images/fillswap.svg";
 import recieve from "../images/recieve.svg"
 import asset from '../images/asset.svg'
+import assetfill from '../images/assetfill.svg'
+import transactionImg from '../images/transaction.svg'
+import filltransactionImg from '../images/filltransaction.svg'
 import bs58 from "bs58";
+import TransactionHistory from "./TransactionHistory";
 
 
 function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account }) {
@@ -279,79 +284,6 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
     }
   }, [wallet, selectedChain]);
 
-  const items = [
-    {
-      key: "0",
-      label: (
-        <>
-          <span
-            style={{
-              color: "white",
-              cursor: "pointer",
-            }}
-
-          >            <img src={recieve} alt="send" className="w-9 ml-1" />
-
-            <p className="text-xs">Tokens</p>
-          </span>
-        </>
-      ),
-      children: <AssetsTab tokens={tokens} />
-    },
-    {
-      key: "2", label: (
-        <>
-          <span
-            style={{
-              color: "white",
-              cursor: "pointer",
-            }}
-
-          >
-            <img src={send} alt="send" className="w-8" />
-
-            <p className="text-xs">Send</p>
-          </span>
-        </>
-      ),
-      children: <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} />
-    },
-    {
-      key: "4", label: (
-        <>
-          <span
-            style={{
-              color: "white",
-              cursor: "pointer",
-            }}
-
-          >
-            <img src={security} alt="send" className="w-9 ml-1" />
-
-            <p className="text-xs"> Security </p>
-          </span>
-        </>
-      ), children: <SecurityTab wallet={wallet} accountkeys={accountkeys} />
-    },
-    {
-      key: "5", label: (
-        <>
-          <span
-            style={{
-              color: "white",
-              cursor: "pointer",
-            }}
-
-          >
-            <img src={swap} alt="send" className="w-8" />
-
-            <p className="text-xs">Swap</p>
-          </span>
-        </>
-      ), children: <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} />
-    },
-  ];
-
   return (
     <>
       <div className="gradient-blue z-[1]"></div>
@@ -383,7 +315,6 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
           {fetching ? (
             <Spin className="" />
           ) : (
-            // <Tabs defaultActiveKey="1" items={items} className="walletView overflow-x-hidden overflow-y-hidden" />
             <>
               <div className="flex justify-center gap-2.5">
                 <div className=""
@@ -410,7 +341,8 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                   tab === 4 ? <AssetsTab tokens={tokens} /> :
                     tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
                       tab === 2 ? <SecurityTab wallet={wallet} accountkeys={accountkeys} /> :
-                        <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} />
+                        tab === 5 ? <TransactionHistory wallet={wallet} selectedChain={selectedChain} /> :
+                          <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} />
                 }
               </div>
             </>
@@ -530,12 +462,16 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
         }
       `}</style>
         </div>
-        <div className="flex items-center justify-center px-4 w-full border-t-[1px] border-[#1D1D1D] gap-[35px] py-[15px] mt-auto mb-4">
-          <img src={asset} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} />
+        <div className="flex items-center justify-center px-4 w-full border-t-[1px] border-[#1D1D1D] gap-[35px] py-[15px] mt-auto mb-4 sticky bottom-0 z-[10] bg-black pb-8">
+          {
+            tab == 4 ? <img src={assetfill} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} /> : <img src={asset} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} />
+          }
           <img src={send} alt={"Send"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(1)} />
           <img src={recieve} alt={"Recieve"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(2)} />
-          <img src={swap} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} />
-          <img src={send} alt={"Send"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(1)} />
+          {
+            tab === 3 ? <img src={fillswap} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} /> : <img src={swap3} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} />
+          }
+          {tab === 5 ? <img src={filltransactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} /> : <img src={transactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} />}
         </div>
       </div>
     </>

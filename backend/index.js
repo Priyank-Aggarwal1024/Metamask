@@ -1,7 +1,7 @@
 const express = require("express");
 const Moralis = require("moralis").default;
-const speakeasy = require("speakeasy"); 
-const qrcode = require("qrcode"); 
+const speakeasy = require("speakeasy");
+const qrcode = require("qrcode");
 const cors = require("cors");
 require("dotenv").config();
 const port = 3001;
@@ -20,7 +20,7 @@ app.post("/auth/generate-2fa", async (req, res) => {
   console.log(`Generating 2FA secret for user: ${userId}`);
 
   const secret = speakeasy.generateSecret({
-    name: `SolanaWallet (${userId})`, 
+    name: `SolanaWallet (${userId})`,
   });
 
   userSecrets[userId] = secret;
@@ -169,7 +169,7 @@ app.get("/getTokens", async (req, res) => {
     decimals: "9",
     name: "Solana",
     symbol: "SOL"
-  };  
+  };
 
   const jsonResponse = {
     tokens: [nativeSol, ...tokens.raw],
@@ -177,10 +177,9 @@ app.get("/getTokens", async (req, res) => {
     balance: balance.raw.solana,
   };
   console.log(jsonResponse)
-  
+
   return res.status(200).json(jsonResponse);
 });
-
 Moralis.start({
   apiKey: process.env.MORALIS_KEY,
 }).then(() => {
