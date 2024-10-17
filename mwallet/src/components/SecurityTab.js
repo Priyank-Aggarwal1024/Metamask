@@ -7,7 +7,7 @@ import auth3 from "../images/auth3.png"
 import back from '../images/back.svg'
 import view from '../images/view.svg'
 
-function SecurityTab({ wallet, accountkeys, authTab }) {
+function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
   const [qrCodeUrl, setQrCodeUrl] = useState(null);
   const [show2FASetup, setShow2FASetup] = useState(false);
   const [isVisiblePin, setIsVisiblePin] = useState(false);
@@ -28,6 +28,7 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
     const setup = JSON.parse(localStorage.getItem("TwoFaSetupz") || "{}");
     if (setup[wallet]) {
       message.error("2FA already setup!");
+      setTab(4)
     } else {
       try {
         const response = await axios.post(
@@ -39,6 +40,8 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
       } catch (error) {
         console.error("Error generating 2FA QR code:", error);
         message.error("Failed to generate 2FA QR code");
+        setTab(4)
+
       }
     }
   };
@@ -58,7 +61,7 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
         localStorage.setItem("TwoFaSetupz", JSON.stringify(currentSetup));
         setQrCodeUrl(null);
         setShow2FASetup(false);
-        setInnerTab(2)
+        setTab(4)
       } else {
         message.error("Invalid 2FA code. Please try again.");
       }
@@ -72,6 +75,7 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
     const setup = JSON.parse(localStorage.getItem("pinSetup") || "{}");
     if (setup[wallet]) {
       message.error("PIN already set!");
+      setTab(4)
     } else {
       setIsVisiblePin(true);
     }
@@ -85,7 +89,7 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
       setStoredPassword(password);
       message.success("Password set successfully");
       setIsVisiblePin(false);
-      setInnerTab(3)
+      setTab(4)
     } else {
       message.error("Passwords do not match");
     }
@@ -94,65 +98,81 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
   const revealKey = () => {
     setKey(priKey.secretKey);
   };
-  const [innerTab, setInnerTab] = useState(1);
-
-  const [tab, setTab] = useState(null);
+  const [innerTab, setInnerTab] = useState(4);
   useEffect(() => {
     setShow2FASetup(false)
   }, [])
   useEffect(() => {
     if (authTab) {
+      setShow2FASetup(false);
+      setQrCodeUrl(null)
+      setIsVisiblePin(false)
       setInnerTab(authTab.innerTab)
+      if (authTab.innerTab === 1) {
+        generate2FA()
+
+      } else if (authTab.innerTab === 2) {
+        generatePin()
+      } else if (authTab.innerTab === 3) {
+        revealKey()
+      }
       console.log(authTab)
     }
-  }, [authTab])
+  }, [innerTab, authTab])
   return (
-    <>
+    <div className="bg-black p-5 h-[560px]">
       {
         !isVisiblePin && !qrCodeUrl && <>
-          {
-            innerTab == 1 && (<>
+          {/* {
+            innerTab === 1 && (<>
               <div className="flex text-white items-center ml-2 -space-x-5"> <img src={auth} alt="" className="w-24" /> <p className=" text-lg font-bold"> Google Authentication </p>  </div>
 
               <Button className="frontPageButton1" onClick={generate2FA}>Generate 2FA QR Code</Button>
             </>)
           }
           {
-            innerTab == 2 && <p className="mt-6">
+            innerTab === 2 && <p className="mt-6">
               <Button className="frontPageButton1" onClick={generatePin}>Setup Transaction PIN</Button>
             </p>
           }
-          {
-            innerTab == 3 && <p>
+           */}
+          {/* {
+            innerTab === 3 && <p>
 
               <Button className="frontPageButton1" onClick={revealKey}>Reveal PrivateKey</Button>
             </p>
-          }
+          } */}
           {key && (
-            <div className="mt-[-200px] mb-30px">
-              <Alert
+            <div className="">
+              <img className="py-4" alt="Back" src={back} onClick={() => {
+                setIsVisiblePin(false)
+                setPassword("")
+                setConfirmPassword("")
+                setTab(4)
+              }} />
+              {/* <Alert
                 message={"Please Copy and Close this"}
-                description={
-                  <div>
-                    {key}
-                    <br />
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(key); setTimeout(() => {
-                          setcopy("Copy Private Key")
+                description={ */}
+              <div className="max-w-[310px] relative z-[1]  text-white">
+                <p className="text-wrap break-words max-w-[310px]">{key}</p>
+                <br />
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(key); setTimeout(() => {
+                      setcopy("Copy Private Key")
 
-                        }, 2000); setcopy("Copied")
-                      }}
-                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-red-600"
-                    >
-                      {copy}
-                    </button>
-                  </div>
-                }
+                    }, 2000); setcopy("Copied")
+                  }}
+                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-red-600"
+                >
+                  {copy}
+                </button>
+              </div>
+              {/* }
                 type="warning"
                 closable
                 onClose={onClose}
-              />
+              /> */}
               <br />
             </div>
           )}
@@ -165,6 +185,7 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
               setIsVisiblePin(false)
               setPassword("")
               setConfirmPassword("")
+              setTab(4)
             }} />
             <div className="passwordRow mt-4">
               {/* <p style={{ width: "150px", textAlign: "left", color: "white" }}>PIN:</p> */}
@@ -211,7 +232,7 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
       </>
       {qrCodeUrl && (
         <>
-          <img className="py-4" alt="Back" src={back} onClick={() => setQrCodeUrl(null)} />
+          <img className="py-4" alt="Back" src={back} onClick={() => { setQrCodeUrl(null); setTab(4) }} />
           <div className="text-white text-[22px] font-semibold font-['Urbanist'] text-start">Google Authenticator</div>
           <div className="text-[#474747] text-[15px] font-light font-['Urbanist'] leading-[21px] text-start">Scan the code below to set up your 2FA with google authenticator</div>
           <div className="w-full flex justify-center">
@@ -239,7 +260,7 @@ function SecurityTab({ wallet, accountkeys, authTab }) {
           )}
         </>
       )}
-    </>
+    </div>
   );
 }
 

@@ -22,6 +22,7 @@ import transactionImg from '../images/transaction.svg'
 import filltransactionImg from '../images/filltransaction.svg'
 import bs58 from "bs58";
 import TransactionHistory from "./TransactionHistory";
+import ReceiveTab from "./ReceiveTab";
 
 
 function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account, authTab }) {
@@ -291,190 +292,166 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
   }, [authTab])
   return (
     <>
-      <div className="gradient-blue z-[1]"></div>
-      <div className="content relative bg-black overflow-x-hidden overflow-y-hidden overflow-hidden max-w-[350px] w-full">
-        <div className="z-[2] max-w-full w-full">
-          <div className="addButton text-white" onClick={handleImportClick}>
-            <PlusCircleOutlined />
-          </div>
-          <WalletHeader wallet={wallet} selectedChain={selectedChain} balance={balance} />
-          <div className="text-[#A8A8A8] font-sans text-xs mb-2.5">Total Balance</div>
-          <div className="font-bold text-white text-[40px] flex items-center justify-center gap-1">
-            <p>{balance} SOL</p>
-            <FontAwesomeIcon
-              icon={faSyncAlt}
-              style={{ cursor: "pointer", fontSize: "12px" }}
-              onClick={getAccountTokens}
-            />
-          </div>
-          <div className="flex justify-center items-center gap-1.5 mb-2.5">
-            <div className="text-center text-white text-sm font-normal font-urbanist leading-[17px]">+$234</div>
-            <div className="h-[24.51px] px-2 py-1 bg-[#17872a] rounded-lg border border-[#17872a] flex-col justify-end items-center gap-2 inline-flex text-center text-white text-[13px] font-normal leading-[18px]">
-              +30.23%
+      {tab !== 2 && <>
+        <div className="gradient-blue z-[1]"></div>
+        <div className="content relative bg-black overflow-x-hidden overflow-y-hidden overflow-hidden max-w-[350px] w-full">
+          <div className="z-[2] max-w-full w-full">
+            <div className="addButton text-white" onClick={handleImportClick}>
+              <PlusCircleOutlined />
             </div>
-          </div>
-          {fetching ? (
-            <Spin className="" />
-          ) : (
-            <>
-              <div className="flex justify-center gap-2.5">
-                <div className=""
-                  onClick={() => setTab(1)}
-                >
-                  <img src={send} alt="Send" />
-                  <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Send</div>
-                </div>
-                <div className=""
-                  onClick={() => setTab(2)}
-                >
-                  <img src={recieve} alt="Receive" />
-                  <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Receive</div>
-                </div>
-                <div className=""
-                  onClick={() => setTab(3)}
-                >
-                  <img src={swap} alt="Swap" />
-                  <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Swap</div>
-                </div>
+            <WalletHeader wallet={wallet} selectedChain={selectedChain} balance={balance} />
+            <div className="text-[#A8A8A8] font-sans text-xs mb-2.5">Total Balance</div>
+            <div className="font-bold text-white text-[40px] flex items-center justify-center gap-1">
+              <p>{balance} SOL</p>
+              <FontAwesomeIcon
+                icon={faSyncAlt}
+                style={{ cursor: "pointer", fontSize: "12px" }}
+                onClick={getAccountTokens}
+              />
+            </div>
+            <div className="flex justify-center items-center gap-1.5 mb-2.5">
+              <div className="text-center text-white text-sm font-normal font-urbanist leading-[17px]">+$234</div>
+              <div className="h-[24.51px] px-2 py-1 bg-[#17872a] rounded-lg border border-[#17872a] flex-col justify-end items-center gap-2 inline-flex text-center text-white text-[13px] font-normal leading-[18px]">
+                +30.23%
               </div>
-              <div className="px-4 w-full py-4">
-                {
-                  tab === 4 ? <AssetsTab tokens={tokens} /> :
-                    tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
-                      tab === 2 ? <SecurityTab wallet={wallet} accountkeys={accountkeys} authTab={authTab} /> :
+            </div>
+            {fetching ? (
+              <Spin className="" />
+            ) : (
+              <>
+                <div className="flex justify-center gap-2.5">
+                  <div className=""
+                    onClick={() => setTab(1)}
+                  >
+                    <img src={send} alt="Send" />
+                    <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Send</div>
+                  </div>
+                  <div className=""
+                    onClick={() => setTab(2)}
+                  >
+                    <img src={recieve} alt="Receive" />
+                    <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Receive</div>
+                  </div>
+                  <div className=""
+                    onClick={() => setTab(3)}
+                  >
+                    <img src={swap} alt="Swap" />
+                    <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Swap</div>
+                  </div>
+                </div>
+                <div className="px-4 w-full py-4">
+                  {
+                    tab === 4 ? <AssetsTab tokens={tokens} /> :
+                      tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
                         tab === 5 ? <TransactionHistory wallet={wallet} selectedChain={selectedChain} /> :
-                          <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} />
-                }
-              </div>
-            </>
-          )}
-          {showPopup && (
-            <div className="absolute bottom-0 left-0 right-0 bg-black text-white rounded-t-2xl shadow-lg animate-slide-up">
-              <div className="p-6">
-                <div className="flex items-center mb-6">
-                  <ArrowLeftOutlined className="text-xl mr-4 cursor-pointer" onClick={closePopup} />
-                  <h3 className="text-sm flex-grow text-center">Select Account</h3>
+                          tab === 3 ? <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} /> :
+                            tab === 6 && <ReceiveTab wallet={wallet} />
+                  }
                 </div>
-                <List
-                  dataSource={accountkeys}
-                  renderItem={(account) => (
-                    <List.Item
-                      onClick={() => handleAccountSelect(account)}
-                      className="cursor-pointer hover:bg-gray-800 transition-colors"
-                    >
-                      <div className="w-full flex items-center justify-between">
-                        <div className="flex items-center w-full">
-                          <div className="w-8">
-                            {account.publicKey === wallet ? (
-                              <CheckCircleFilled className="text-purple-500" />
-                            ) : (
-                              <CheckCircleOutlined className="text-gray-400" />
-                            )}
-                          </div>
-                          <span className="text-white flex-grow text-center">
-                            {truncateAddress(account.publicKey)}
-                          </span>
-
-                          <span className="text-green-400 ml-4">
-                            {loading && selectedChain === "mainnet"
-                              ? "Loading..."
-                              : selectedChain === "mainnet"
-                                ? `$${account.usdbal}`
-                                : "$0.00"}
-                          </span>
-                        </div>
-                      </div>
-                    </List.Item>
-                  )}
-                />
-
-                {error && (
-                  <p style={{ color: "red" }}>Error: {error}</p>
-                )}
-
-              </div>
-              <button className="frontPageButton1 mb-4" onClick={show}>Add New Account</button>
-            </div>
-          )}
-
-          <style>{`
-          .content {
-            overflow-y: auto;
-          }
-          @keyframes slide-up {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-          }
-          .animate-slide-up {
-            animation: slide-up 0.3s ease-out forwards;
-          }
-        `}</style>
-
-          {showPopupdiv && (
-            <div className="fixed  bg-black bg-opacity-50 z-50 flex items-end mt-64">
-              <div className="content bg-black w-full max-w-full border-stone-200 max-h-[45vh]">
-                <div className="bg-black text-white p-6 slide-up">
+              </>
+            )}
+            {showPopup && (
+              <div className="absolute bottom-0 left-0 right-0 bg-black text-white rounded-t-2xl shadow-lg animate-slide-up">
+                <div className="p-6">
                   <div className="flex items-center mb-6">
-                    <ArrowLeftOutlined className="text-lg mr-4" onClick={closePopup} />
-                    <h3 className="text-sm font-bold ml-10 ">Import Existing Wallet</h3>
+                    <ArrowLeftOutlined className="text-xl mr-4 cursor-pointer" onClick={closePopup} />
+                    <h3 className="text-sm flex-grow text-center">Select Account</h3>
                   </div>
+                  <List
+                    dataSource={accountkeys}
+                    renderItem={(account) => (
+                      <List.Item
+                        onClick={() => handleAccountSelect(account)}
+                        className="cursor-pointer hover:bg-gray-800 transition-colors"
+                      >
+                        <div className="w-full flex items-center justify-between">
+                          <div className="flex items-center w-full">
+                            <div className="w-8">
+                              {account.publicKey === wallet ? (
+                                <CheckCircleFilled className="text-purple-500" />
+                              ) : (
+                                <CheckCircleOutlined className="text-gray-400" />
+                              )}
+                            </div>
+                            <span className="text-white flex-grow text-center">
+                              {truncateAddress(account.publicKey)}
+                            </span>
 
-                  <div className="space-y-4">
-                    <button
-                      onClick={() => recover()}
-                      className="frontPageButton2"
-                      type="default"
-                    >
-                      By Private Key
-                    </button>
-                    <Button
-                      onClick={(e) => recoverseed()}
-                      className="frontPageButton1 border-purple-950 font-semibold"
-                      type="default"
-                    >
-                      By Mnemonic Phrase
-                    </Button>
+                            <span className="text-green-400 ml-4">
+                              {loading && selectedChain === "mainnet"
+                                ? "Loading..."
+                                : selectedChain === "mainnet"
+                                  ? `$${account.usdbal}`
+                                  : "$0.00"}
+                            </span>
+                          </div>
+                        </div>
+                      </List.Item>
+                    )}
+                  />
 
-                    <button
-                      onClick={() => create()}
-                      className="frontPageButton3"
-                      type="primary"
-                    >
-                      Create a New Wallet
-                    </button>
+                  {error && (
+                    <p style={{ color: "red" }}>Error: {error}</p>
+                  )}
+
+                </div>
+                <button className="frontPageButton1 mb-4" onClick={show}>Add New Account</button>
+              </div>
+            )}
+            {showPopupdiv && (
+              <div className="fixed  bg-black bg-opacity-50 z-50 flex items-end mt-64">
+                <div className="content bg-black w-full max-w-full border-stone-200 max-h-[45vh]">
+                  <div className="bg-black text-white p-6 slide-up">
+                    <div className="flex items-center mb-6">
+                      <ArrowLeftOutlined className="text-lg mr-4" onClick={closePopup} />
+                      <h3 className="text-sm font-bold ml-10 ">Import Existing Wallet</h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      <button
+                        onClick={() => recover()}
+                        className="frontPageButton2"
+                        type="default"
+                      >
+                        By Private Key
+                      </button>
+                      <Button
+                        onClick={(e) => recoverseed()}
+                        className="frontPageButton1 border-purple-950 font-semibold"
+                        type="default"
+                      >
+                        By Mnemonic Phrase
+                      </Button>
+
+                      <button
+                        onClick={() => create()}
+                        className="frontPageButton3"
+                        type="primary"
+                      >
+                        Create a New Wallet
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
-          <style>{`
-        .slide-up {
-          animation: slide-up 0.3s ease-out;
-        }
-
-        @keyframes slide-up {
-          from {
-            transform: translateY(100%);
-          }
-          to {
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+            )}
+          </div>
+          <div className="flex items-center justify-center px-4 w-full border-t-[1px] border-[#1D1D1D] gap-[35px] py-[15px] mt-auto mb-4 sticky bottom-0 z-[10] bg-black pb-8">
+            {
+              tab === 4 ? <img src={assetfill} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} /> : <img src={asset} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} />
+            }
+            {tab === 5 ? <img src={filltransactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} /> : <img src={transactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} />}
+            {
+              tab === 3 ? <img src={fillswap} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} /> : <img src={swap3} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} />
+            }
+            <img src={send} alt={"Send"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(1)} />
+            <img src={recieve} alt={"Recieve"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(6)} />
+          </div>
         </div>
-        <div className="flex items-center justify-center px-4 w-full border-t-[1px] border-[#1D1D1D] gap-[35px] py-[15px] mt-auto mb-4 sticky bottom-0 z-[10] bg-black pb-8">
-          {
-            tab == 4 ? <img src={assetfill} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} /> : <img src={asset} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} />
-          }
-          {tab === 5 ? <img src={filltransactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} /> : <img src={transactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} />}
-          {
-            tab === 3 ? <img src={fillswap} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} /> : <img src={swap3} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} />
-          }
-          <img src={send} alt={"Send"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(1)} />
-          <img src={recieve} alt={"Recieve"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(2)} />
-        </div>
-      </div>
+      </>}
+      {
+        tab === 2 && <SecurityTab wallet={wallet} accountkeys={accountkeys} authTab={authTab} setTab={setTab} />
+      }
     </>
 
   );
