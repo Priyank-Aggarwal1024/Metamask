@@ -144,13 +144,13 @@ function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
           <div className="text-center text-white text-[15px] font-normal font-urbanist leading-[21px]">Solana</div>
         </div>
       </div>
-      <input className="text-center text-white text-[40px] font-bold font-['Urbanist'] leading-[18px] pb-[15px] border-none outline-none bg-transparent flex max-w-full"
-        placeholder="10.50 SOL"
+      <input className="text-center text-white text-[40px] font-bold font-['Urbanist'] leading-[18px] pb-[15px] border-none outline-none bg-transparent flex max-w-full placeholder:text-[20px]"
+        placeholder="Enter Amount"
         value={amountToSend}
         onChange={(e) => setAmountToSend(e.target.value)}
       />
-      <div className="text-center text-[#474747] text-lg font-normal font-['Urbanist'] leading-[18px]"
-      >$1,575 USD</div>
+      {/* <div className="text-center text-[#474747] text-lg font-normal font-['Urbanist'] leading-[18px]"
+      >$1,575 USD</div> */}
 
 
       <div className="pt-8">
