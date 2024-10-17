@@ -719,3 +719,7 @@ header {
 .ant-input-password input::placeholder {
   color: #474747;
 }
+
+.scrollbar-none {
+  scrollbar-width: none;
+}

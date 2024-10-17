@@ -23,6 +23,7 @@ import filltransactionImg from '../images/filltransaction.svg'
 import bs58 from "bs58";
 import TransactionHistory from "./TransactionHistory";
 import ReceiveTab from "./ReceiveTab";
+import BackArrow from "./BackArrow";
 
 
 function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account, authTab }) {
@@ -290,9 +291,13 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
       console.log(authTab)
     }
   }, [authTab])
+  useEffect(() => {
+    closePopup();
+
+  }, [tab])
   return (
     <>
-      {tab !== 2 && <>
+      {tab !== 2 && tab !== 1 && tab !== 3 && tab !== 5 && tab !== 6 && <>
         <div className="gradient-blue z-[1]"></div>
         <div className="content relative bg-black overflow-x-hidden overflow-y-hidden overflow-hidden max-w-[350px] w-full">
           <div className="z-[2] max-w-full w-full">
@@ -341,17 +346,13 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                 </div>
                 <div className="px-4 w-full py-4">
                   {
-                    tab === 4 ? <AssetsTab tokens={tokens} /> :
-                      tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
-                        tab === 5 ? <TransactionHistory wallet={wallet} selectedChain={selectedChain} /> :
-                          tab === 3 ? <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} /> :
-                            tab === 6 && <ReceiveTab wallet={wallet} />
+                    tab === 4 && <AssetsTab tokens={tokens} />
                   }
                 </div>
               </>
             )}
             {showPopup && (
-              <div className="absolute bottom-0 left-0 right-0 bg-black text-white rounded-t-2xl shadow-lg animate-slide-up">
+              <div className="absolute bottom-0 left-0 right-0 bg-black text-white rounded-t-2xl shadow-lg animate-slide-up mb-[90px]">
                 <div className="p-6">
                   <div className="flex items-center mb-6">
                     <ArrowLeftOutlined className="text-xl mr-4 cursor-pointer" onClick={closePopup} />
@@ -359,6 +360,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                   </div>
                   <List
                     dataSource={accountkeys}
+                    className="max-h-[250px] overflow-y-auto scrollbar-none"
                     renderItem={(account) => (
                       <List.Item
                         onClick={() => handleAccountSelect(account)}
@@ -395,7 +397,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                   )}
 
                 </div>
-                <button className="frontPageButton1 mb-4" onClick={show}>Add New Account</button>
+                <button className="frontPageButton1 mb-4" style={{ marginTop: "0px" }} onClick={show}>Add New Account</button>
               </div>
             )}
             {showPopupdiv && (
@@ -449,9 +451,15 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
           </div>
         </div>
       </>}
-      {
-        tab === 2 && <SecurityTab wallet={wallet} accountkeys={accountkeys} authTab={authTab} setTab={setTab} />
-      }
+      {tab !== 4 && tab !== null && <div className="bg-black p-5 h-[560px] overflow-y-auto scrollbar-none w-[350px]">
+        {tab !== 2 && <BackArrow setTab={setTab} />}
+        {
+          tab === 2 ? <SecurityTab wallet={wallet} accountkeys={accountkeys} authTab={authTab} setTab={setTab} /> : tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
+            tab === 5 ? <TransactionHistory wallet={wallet} selectedChain={selectedChain} /> :
+              tab === 3 ? <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} /> :
+                tab === 6 && <ReceiveTab wallet={wallet} />
+        }
+      </div>}
     </>
 
   );

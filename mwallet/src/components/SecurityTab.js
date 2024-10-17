@@ -120,7 +120,7 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
     }
   }, [innerTab, authTab])
   return (
-    <div className="bg-black p-5 h-[560px] w-[350px]">
+    <div className="">
       {
         !isVisiblePin && !qrCodeUrl && <>
           {/* {
@@ -144,7 +144,7 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
           } */}
           {key && (
             <div className="">
-              <img className="py-4" alt="Back" src={back} onClick={() => {
+              <img className="pb-4" alt="Back" src={back} onClick={() => {
                 setIsVisiblePin(false)
                 setPassword("")
                 setConfirmPassword("")
@@ -181,7 +181,7 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
       <>
         {isVisiblePin && (
           <div className="setupPin">
-            <img className="py-4" alt="Back" src={back} onClick={() => {
+            <img className="pb-4" alt="Back" src={back} onClick={() => {
               setIsVisiblePin(false)
               setPassword("")
               setConfirmPassword("")
@@ -232,7 +232,7 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
       </>
       {qrCodeUrl && (
         <>
-          <img className="py-4" alt="Back" src={back} onClick={() => { setQrCodeUrl(null); setTab(4) }} />
+          <img className="pb-4" alt="Back" src={back} onClick={() => { setQrCodeUrl(null); setTab(4) }} />
           <div className="text-white text-[22px] font-semibold font-['Urbanist'] text-start">Google Authenticator</div>
           <div className="text-[#474747] text-[15px] font-light font-['Urbanist'] leading-[21px] text-start">Scan the code below to set up your 2FA with google authenticator</div>
           <div className="w-full flex justify-center">
