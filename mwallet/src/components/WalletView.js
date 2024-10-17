@@ -237,6 +237,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
 
   function show() {
     setShowPopupdiv(true)
+    setShowPopup(false)
     console.log("button pressed")
   }
 
@@ -400,43 +401,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                 <button className="frontPageButton1 mb-4" style={{ marginTop: "0px" }} onClick={show}>Add New Account</button>
               </div>
             )}
-            {showPopupdiv && (
-              <div className="fixed  bg-black bg-opacity-50 z-50 flex items-end mt-64">
-                <div className="content bg-black w-full max-w-full border-stone-200 max-h-[45vh]">
-                  <div className="bg-black text-white p-6 slide-up">
-                    <div className="flex items-center mb-6">
-                      <ArrowLeftOutlined className="text-lg mr-4" onClick={closePopup} />
-                      <h3 className="text-sm font-bold ml-10 ">Import Existing Wallet</h3>
-                    </div>
 
-                    <div className="space-y-4">
-                      <button
-                        onClick={() => recover()}
-                        className="frontPageButton2"
-                        type="default"
-                      >
-                        By Private Key
-                      </button>
-                      <Button
-                        onClick={(e) => recoverseed()}
-                        className="frontPageButton1 border-purple-950 font-semibold"
-                        type="default"
-                      >
-                        By Mnemonic Phrase
-                      </Button>
-
-                      <button
-                        onClick={() => create()}
-                        className="frontPageButton3"
-                        type="primary"
-                      >
-                        Create a New Wallet
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
           <div className="flex items-center justify-center px-4 w-full border-t-[1px] border-[#1D1D1D] gap-[35px] py-[15px] mt-auto mb-4 sticky bottom-0 z-[10] bg-black pb-8">
             {
@@ -460,6 +425,43 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                 tab === 6 && <ReceiveTab wallet={wallet} />
         }
       </div>}
+      {showPopupdiv && (
+        <div className="absolute top-0 bg-black bg-opacity-50 z-50 flex items-end mt-64">
+          <div className="content bg-black w-full max-w-full border-stone-200 max-h-[45vh]">
+            <div className="bg-black text-white p-6 slide-up">
+              <div className="flex items-center mb-6">
+                <ArrowLeftOutlined className="text-lg mr-4" onClick={closePopup} />
+                <h3 className="text-sm font-bold ml-10 ">Import Existing Wallet</h3>
+              </div>
+
+              <div className="space-y-4">
+                <button
+                  onClick={() => recover()}
+                  className="frontPageButton2"
+                  type="default"
+                >
+                  By Private Key
+                </button>
+                <Button
+                  onClick={(e) => recoverseed()}
+                  className="frontPageButton1 border-purple-950 font-semibold"
+                  type="default"
+                >
+                  By Mnemonic Phrase
+                </Button>
+
+                <button
+                  onClick={() => create()}
+                  className="frontPageButton3"
+                  type="primary"
+                >
+                  Create a New Wallet
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
 
   );
