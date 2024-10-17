@@ -7,7 +7,7 @@ import auth3 from "../images/auth3.png"
 import back from '../images/back.svg'
 import view from '../images/view.svg'
 
-function SecurityTab({ wallet, accountkeys }) {
+function SecurityTab({ wallet, accountkeys, authTab }) {
   const [qrCodeUrl, setQrCodeUrl] = useState(null);
   const [show2FASetup, setShow2FASetup] = useState(false);
   const [isVisiblePin, setIsVisiblePin] = useState(false);
@@ -58,6 +58,7 @@ function SecurityTab({ wallet, accountkeys }) {
         localStorage.setItem("TwoFaSetupz", JSON.stringify(currentSetup));
         setQrCodeUrl(null);
         setShow2FASetup(false);
+        setInnerTab(2)
       } else {
         message.error("Invalid 2FA code. Please try again.");
       }
@@ -84,6 +85,7 @@ function SecurityTab({ wallet, accountkeys }) {
       setStoredPassword(password);
       message.success("Password set successfully");
       setIsVisiblePin(false);
+      setInnerTab(3)
     } else {
       message.error("Passwords do not match");
     }
@@ -92,27 +94,40 @@ function SecurityTab({ wallet, accountkeys }) {
   const revealKey = () => {
     setKey(priKey.secretKey);
   };
+  const [innerTab, setInnerTab] = useState(1);
+
   const [tab, setTab] = useState(null);
   useEffect(() => {
     setShow2FASetup(false)
   }, [])
-
+  useEffect(() => {
+    if (authTab) {
+      setInnerTab(authTab.innerTab)
+      console.log(authTab)
+    }
+  }, [authTab])
   return (
     <>
       {
         !isVisiblePin && !qrCodeUrl && <>
-          <div className="flex text-white items-center ml-2 -space-x-5"> <img src={auth} alt="" className="w-24" /> <p className=" text-lg font-bold"> Google Authentication </p>  </div>
-          <span className="text-white">Step 1:-</span>{" "}
-          <Button className="frontPageButton1" onClick={generate2FA}>Generate 2FA QR Code</Button>
-          <p className="mt-6">
-            {" "}
-            <span className="text-white">Step 2:-</span> <Button className="frontPageButton1" onClick={generatePin}>Setup Transaction PIN</Button>
-          </p>
-          <p>
-            {" "}
+          {
+            innerTab == 1 && (<>
+              <div className="flex text-white items-center ml-2 -space-x-5"> <img src={auth} alt="" className="w-24" /> <p className=" text-lg font-bold"> Google Authentication </p>  </div>
 
-            <Button className="frontPageButton1" onClick={revealKey}>Reveal PrivateKey</Button>
-          </p>
+              <Button className="frontPageButton1" onClick={generate2FA}>Generate 2FA QR Code</Button>
+            </>)
+          }
+          {
+            innerTab == 2 && <p className="mt-6">
+              <Button className="frontPageButton1" onClick={generatePin}>Setup Transaction PIN</Button>
+            </p>
+          }
+          {
+            innerTab == 3 && <p>
+
+              <Button className="frontPageButton1" onClick={revealKey}>Reveal PrivateKey</Button>
+            </p>
+          }
           {key && (
             <div className="mt-[-200px] mb-30px">
               <Alert
@@ -211,7 +226,7 @@ function SecurityTab({ wallet, accountkeys }) {
               <img
                 src={auth3}
                 alt="Overlay Img"
-                className="absolute  bottom-[85px] left-[148px] w-[40px] bg-black rounded-full "
+                className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40px] bg-black rounded-full "
               />
             </div>
           </div>

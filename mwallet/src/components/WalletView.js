@@ -24,7 +24,7 @@ import bs58 from "bs58";
 import TransactionHistory from "./TransactionHistory";
 
 
-function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account }) {
+function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account, authTab }) {
   const navigate = useNavigate();
   const [tokens, setTokens] = useState(null);
   const [nfts, setNfts] = useState(null);
@@ -283,7 +283,12 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
       // fetchTransactions(wallet,selectedChain);
     }
   }, [wallet, selectedChain]);
-
+  useEffect(() => {
+    if (authTab) {
+      setTab(authTab.tab)
+      console.log(authTab)
+    }
+  }, [authTab])
   return (
     <>
       <div className="gradient-blue z-[1]"></div>
@@ -336,7 +341,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                 {
                   tab === 4 ? <AssetsTab tokens={tokens} /> :
                     tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
-                      tab === 2 ? <SecurityTab wallet={wallet} accountkeys={accountkeys} /> :
+                      tab === 2 ? <SecurityTab wallet={wallet} accountkeys={accountkeys} authTab={authTab} /> :
                         tab === 5 ? <TransactionHistory wallet={wallet} selectedChain={selectedChain} /> :
                           <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} />
                 }

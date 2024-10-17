@@ -24,7 +24,7 @@ function App() {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
 
-
+  const [authTab, setAuthTab] = useState(null);
 
   const [openModal, setOpenModal] = useState(false)
 
@@ -33,15 +33,15 @@ function App() {
 
       <div className="header relative max-w-[350px] p-0 m-0">
         {
-          openModal && <div className="absolute z-[5] w-full bg-[#ffffff33] h-[780px]"></div>
+          openModal && <div className="absolute z-[15] w-full bg-[#ffffff33] h-[780px]"></div>
         }
-        <header className="relative z-[6] p-4 flex items-center justify-between text-white">
+        <header className="relative z-[16] p-4 flex items-center justify-between text-white">
           <img src={logo} className="h-10 w-auto" alt="logo" />
           <div className="pr-2 relative">
             <img src={setting} className="" alt="Network Modal" onClick={() => setOpenModal(!openModal)} />
             {
               openModal && <>
-                <div className="w-[208px] h-[236px] bg-[#080808] rounded-[10px] absolute top-[150%] right-0 z-[10]">
+                <div className="w-[208px] bg-[#080808] rounded-[10px] absolute top-[150%] right-0 z-[10]">
                   <div className="w-full px-2 py-2.5">
                     <div className="flex flex-col w-full bg-[#161616] rounded-[10px]">
 
@@ -76,21 +76,30 @@ function App() {
                     </div>
                   </div>
                   <div className="my-[3px] h-[1px] bg-[#1D1D1D] w-full"></div>
-                  <div className="px-2 pb-4 pt-2.5 w-full flex flex-col gap-4">
+                  {wallet && <div className="px-2 pb-4 pt-2.5 w-full flex flex-col gap-4">
                     <div className="text-[#474747] text-[13px] font-medium font-['Urbanist']">Security</div>
-                    <div className="flex items-center">
+                    <div className="flex items-center cursor-pointer" onClick={() => {
+                      setAuthTab(() => ({ tab: 2, innerTab: 1 }))
+                      setOpenModal(false)
+                    }}>
                       <img src={scan2} alt="Scan" />
                       <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Generate 2FA QR code</div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center cursor-pointer" onClick={() => {
+                      setAuthTab(() => ({ tab: 2, innerTab: 2 }))
+                      setOpenModal(false)
+                    }}>
                       <img src={security2} alt="Security" />
                       <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Setup transaction pin</div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center cursor-pointer" onClick={() => {
+                      setAuthTab(() => ({ tab: 2, innerTab: 3 }))
+                      setOpenModal(false)
+                    }}>
                       <img src={key4} alt="Key" />
                       <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Reveal private Key</div>
                     </div>
-                  </div>
+                  </div>}
                 </div>
               </>
             }
@@ -113,6 +122,7 @@ function App() {
                   setSeedPhrase={setSeedPhrase}
                   selectedChain={selectedChain}
                   password={password}
+                  authTab={authTab}
                 />
               }
             />

@@ -84,13 +84,8 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
         </div>
       ) : (
         <div className="content bg-black pt-4">
-          <div className="mnemonic">
-            <ExclamationCircleOutlined style={{ fontSize: "20px" }} />
-            <div className="bg-black text-white">
-              Once you set the password, a seedphrase will generate save it securely in order to
-              recover your wallet in the future.
-            </div>
-          </div>
+          <h1 className="text-white font-sans text-2xl mt-5 font-semibold w-full pl-4 text-start">Mnemonic Phrase</h1>
+          <h3 className="text-[#474747] font-sans text-xs w-full mt-2 pl-4 text-start">The phrase is the only way for you to recover your wallet do not share with anyone</h3>
 
           <Button
             className="frontPageButton1"

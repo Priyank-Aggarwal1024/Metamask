@@ -10,6 +10,10 @@
   flex-direction: column;
 }
 
+button {
+  cursor: pointer;
+}
+
 .frontPageLogo {
   width: 20%;
 }

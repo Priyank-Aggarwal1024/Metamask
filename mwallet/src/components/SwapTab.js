@@ -339,17 +339,26 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
 
           </ConfigProvider>
           <div className="w-[50%]">
-            <input
-              style={{
-                textAlign: "right",
-                borderRadius: "10px",
-              }}
-              value={swapAmount}
-              className="bg-transparent text-white w-full px-1 text-[18px] outline-none"
-              onChange={(e) => setSwapAmount(e.target.value)}
-              placeholder="Enter Amount"
-              type="text"
-            />
+            {swapQuote && (
+              <div className="quoteInfo">
+                <p
+                  style={{
+                    borderRadius: "10px",
+                    backgroundColor: "black",
+                    color: "white",
+                    height: "35px",
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "0 10px",
+                    width: "40%",
+                    marginTop: "40px",
+                    marginLeft: "100px"
+                  }}
+                >
+                  {finalSwapAmount}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className="w-full h-[0px] border border-[#1d1d1d]"></div>
@@ -357,26 +366,6 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
           <div className="text-[#616161] text-[13px] font-normal font-['Urbanist']">1 BTC ~ USD: 50,000</div>
           <img src={righta} alt="Right Arrow" className="rotate-90" />
         </div>
-        {swapQuote && (
-          <div className="quoteInfo">
-            <p
-              style={{
-                borderRadius: "10px",
-                backgroundColor: "black",
-                color: "white",
-                height: "35px",
-                display: "flex",
-                alignItems: "center",
-                padding: "0 10px",
-                width: "40%",
-                marginTop: "40px",
-                marginLeft: "100px"
-              }}
-            >
-              {finalSwapAmount}
-            </p>
-          </div>
-        )}
       </div>
 
       <button

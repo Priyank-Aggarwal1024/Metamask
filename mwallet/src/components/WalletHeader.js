@@ -43,8 +43,8 @@ function WalletHeader({ wallet, selectedChain, balance }) {
                   <div className="text-start text-[#722ae8] text-[13px] font-medium font-['Urbanist'] leading-[15px]">This address can only be used to receive compatible tokens. Any other types of token might be lost</div>
                 </div> */}
                 <div className="flex w-full gap-1.5">
-                  <div className="w-full py-[11px] text-center text-[15px] font-urbanist font-[600] rounded-[10px] bg-[#722AE8]" onClick={handleCopy}>{copySuccess ? copySuccess : "Copy"}</div>
-                  <div className="w-full py-[11px] text-center text-[15px] font-urbanist font-[600] rounded-[10px] bg-[#1D1D1D]">Share</div>
+                  <div className="w-full py-[11px] text-center text-[15px] font-urbanist font-[600] rounded-[10px] bg-[#722AE8] cursor-pointer" onClick={handleCopy}>{copySuccess ? copySuccess : "Copy"}</div>
+                  <div className="w-full py-[11px] text-center text-[15px] font-urbanist font-[600] rounded-[10px] bg-[#1D1D1D] cursor-pointer">Share</div>
                 </div>
               </div>
             </div>
