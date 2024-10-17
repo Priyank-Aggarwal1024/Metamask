@@ -327,7 +327,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                     <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Send</div>
                   </div>
                   <div className=""
-                    onClick={() => setTab(2)}
+                    onClick={() => setTab(6)}
                   >
                     <img src={recieve} alt="Receive" />
                     <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Receive</div>
