@@ -120,7 +120,7 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
     }
   }, [innerTab, authTab])
   return (
-    <div className="bg-black p-5 h-[560px]">
+    <div className="bg-black p-5 h-[560px] w-[350px]">
       {
         !isVisiblePin && !qrCodeUrl && <>
           {/* {
