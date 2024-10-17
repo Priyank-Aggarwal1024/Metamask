@@ -289,10 +289,6 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
       <div className="gradient-blue z-[1]"></div>
       <div className="content relative bg-black overflow-x-hidden overflow-y-hidden overflow-hidden max-w-[350px] w-full">
         <div className="z-[2] max-w-full w-full">
-          <div className="logoutButton text-white" onClick={logout}>
-            <LogoutOutlined />
-
-          </div>
           <div className="addButton text-white" onClick={handleImportClick}>
             <PlusCircleOutlined />
           </div>
@@ -466,12 +462,12 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
           {
             tab == 4 ? <img src={assetfill} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} /> : <img src={asset} alt={"Assets"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(4)} />
           }
-          <img src={send} alt={"Send"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(1)} />
-          <img src={recieve} alt={"Recieve"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(2)} />
+          {tab === 5 ? <img src={filltransactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} /> : <img src={transactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} />}
           {
             tab === 3 ? <img src={fillswap} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} /> : <img src={swap3} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} />
           }
-          {tab === 5 ? <img src={filltransactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} /> : <img src={transactionImg} alt={"Transaction"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(5)} />}
+          <img src={send} alt={"Send"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(1)} />
+          <img src={recieve} alt={"Recieve"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(2)} />
         </div>
       </div>
     </>

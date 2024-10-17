@@ -3,6 +3,7 @@ import { Button, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
+import BackHome from "./BackHome";
 
 function WatchWallet({ setWallet, setSeedPhrase, setPassword }) {
     const navigate = useNavigate();
@@ -46,7 +47,8 @@ function WatchWallet({ setWallet, setSeedPhrase, setPassword }) {
 
     return (
         <>
-            <div className="content bg-black">
+            <BackHome />
+            <div className="content bg-black pt-4">
                 <div className="flex-col justify-start items-start gap-2 inline-flex w-full text-start px-5 pt-4">
                     <div className="text-white text-[22px] font-semibold font-urbanist">Watch Wallet</div>
                     <div className="text-[#474747] text-[15px] font-light font-urbanist leading-[21px]">Fill the details below to track wallet</div>
@@ -80,9 +82,6 @@ function WatchWallet({ setWallet, setSeedPhrase, setPassword }) {
                     Import
                 </Button>
                 {nonValid && <p style={{ color: "red" }}>Invalid Password</p>}
-                <p className="frontPageBottom mt-[320px]" onClick={() => navigate("/")}>
-                    <span>Back Home</span>
-                </p>
             </div>
         </>
     );

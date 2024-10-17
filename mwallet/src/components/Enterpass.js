@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "antd";
 import { useNavigate } from "react-router-dom";
-
+import view from '../images/view.svg'
+import BackHome from "./BackHome";
 function Enterpass({ password, setPassword, confirmpassword, setConfirmPassword }) {
     const [error, setError] = useState("");
     const [pass1, setPass1] = useState("")
     const [pass2, setPass2] = useState("")
+    const [hide1, setHide1] = useState(true)
+    const [hide2, setHide2] = useState(true)
     const navigate = useNavigate();
 
 
@@ -35,25 +38,27 @@ function Enterpass({ password, setPassword, confirmpassword, setConfirmPassword 
 
     return (
         <>
+            <BackHome />
             <div className="content bg-black flex flex-col justify-between w-full">
                 <div>
 
                     <h1 className="text-white font-sans text-2xl mt-5 font-semibold w-full pl-4 text-start">Set up password</h1>
                     <h3 className="text-gray-500 font-sans text-xs w-full mt-2 pl-4 text-start">Enhance security by setting up your password</h3>
 
-                    <Input
+                    <Input.Password
                         value={pass1}
                         onChange={passAdjust}
-                        className="passwordContainer1"
+                        className="passwordContainer1 relative"
                         placeholder="Enter New Password"
+                        iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
                     />
-                    <Input
+                    <Input.Password
                         value={pass2}
                         onChange={confirmpassAdjust}
                         className="passwordContainer1"
                         placeholder="Confirm New Password"
+                        iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
                     />
-
                     {error && <p className="text-red-500 mt-2">{error}</p>}
 
                 </div>
@@ -67,9 +72,6 @@ function Enterpass({ password, setPassword, confirmpassword, setConfirmPassword 
                     >
                         Proceed
                     </button>
-                    <p className="frontPageBottom mt-2" onClick={() => { navigate("/"); setPassword(""); }}>
-                        Back Home
-                    </p>
                 </div>
 
             </div>

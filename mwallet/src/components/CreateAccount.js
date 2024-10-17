@@ -7,6 +7,7 @@ import bs58 from "bs58";
 import * as bip39 from "bip39";
 import { derivePath } from "ed25519-hd-key";
 import wallet from "../images/wallet.png";
+import BackHome from "./BackHome";
 
 
 function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confirmpassword, setConfirmPassword }) {
@@ -66,6 +67,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
 
   return (
     <>
+      <BackHome />
       {loading ? (
         <div className="loading bg-black w-full flex justify-center items-center">
           <div className="mt-36">
@@ -81,7 +83,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
           </div>
         </div>
       ) : (
-        <div className="content bg-black">
+        <div className="content bg-black pt-4">
           <div className="mnemonic">
             <ExclamationCircleOutlined style={{ fontSize: "20px" }} />
             <div className="bg-black text-white">
@@ -113,7 +115,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
             hidden={!newSeedPhrase}
 
           >
-            Copy Your SeddPhrase
+            Copy Your SeedPhrase
           </Button>
           <Button
             className="frontPageButton1"
@@ -125,9 +127,6 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
             Open Your New Wallet
           </Button>
 
-          <p className="frontPageBottom mt-2" onClick={() => navigate("/")}>
-            Back Home
-          </p>
         </div>
       )}
     </>

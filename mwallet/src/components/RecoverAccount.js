@@ -6,7 +6,8 @@ import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
 import wallet from "../images/wallet.png";
 import ibutton from '../images/ibutton.svg'
-
+import view from '../images/view.svg'
+import BackHome from "./BackHome";
 
 function RecoverAccountSecretKey({ setWallet, setSeedPhrase, password, setPassword }) {
   const navigate = useNavigate();
@@ -92,6 +93,7 @@ function RecoverAccountSecretKey({ setWallet, setSeedPhrase, password, setPasswo
 
   return (
     <>
+      <BackHome />
       {loading ? (
         <div className="loading bg-black w-full flex justify-center items-center">
           <div className="mt-36">
@@ -107,24 +109,26 @@ function RecoverAccountSecretKey({ setWallet, setSeedPhrase, password, setPasswo
           </div>
         </div>
       ) : (
-        <div className="content bg-black">
+        <div className="content bg-black pt-4">
           <div className="mnemonic">
             <BulbOutlined style={{ fontSize: "20px" }} />
             <div>
               Paste your base58 encoded secret key in the field below to recover your wallet.
             </div>
           </div>
-          {showpassdiv && (<> <Input
+          {showpassdiv && (<> <Input.Password
             value={pass1}
             onChange={passAdjust}
             className="passwordContainer1"
             placeholder="Enter New Password"
+            iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
           />
-            <Input
+            <Input.Password
               value={pass2}
+              placeholder="Confirm New Password"
               onChange={confirmpassAdjust}
               className="passwordContainer1"
-              placeholder="Confirm New Password"
+              iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
             />
             {error && <p className="text-red-500 mt-2">{error}</p>}
             <button className="frontPageButton1" onClick={showdiv} >Set Password</button>
@@ -162,9 +166,6 @@ function RecoverAccountSecretKey({ setWallet, setSeedPhrase, password, setPasswo
           )}
           {nonValid && <p style={{ color: "red" }}>Invalid Secret Key</p>}
           {blankPassword && <p style={{ color: "red" }}>Enter Password</p>}
-          <p className="frontPageBottom mt-2" onClick={() => navigate("/")}>
-            <span>Back Home</span>
-          </p>
         </div>
       )}
     </>

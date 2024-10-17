@@ -4,6 +4,8 @@ import { Button, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
+import view from '../images/view.svg'
+import BackHome from "./BackHome";
 
 function SignInPwd({ setWallet, setSeedPhrase, setPassword }) {
     const navigate = useNavigate();
@@ -44,7 +46,8 @@ function SignInPwd({ setWallet, setSeedPhrase, setPassword }) {
 
     return (
         <>
-            <div className="content bg-black">
+            <BackHome />
+            <div className="content bg-black pt-4">
                 <div className="mnemonic">
                     <BulbOutlined style={{ fontSize: "20px", padding: "10px" }} />
                     <div>
@@ -54,8 +57,10 @@ function SignInPwd({ setWallet, setSeedPhrase, setPassword }) {
                 <Input.Password
                     value={typedSeed}
                     onChange={seedAdjust}
-                    className=" custom-password-input passwordContainer1"
+                    className="passwordContainer1"
                     placeholder="Enter Password"
+                    iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
+
                 />
 
                 <Button
@@ -67,9 +72,6 @@ function SignInPwd({ setWallet, setSeedPhrase, setPassword }) {
                     Sign In
                 </Button>
                 {nonValid && <p style={{ color: "red" }}>Invalid Password</p>}
-                <p className="frontPageBottom mt-[320px]" onClick={() => navigate("/")}>
-                    <span>Back Home</span>
-                </p>
             </div>
         </>
     );

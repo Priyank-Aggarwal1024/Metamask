@@ -9,9 +9,16 @@ import WIF from '../images/dog.png';
 import SOL from "../images/Solana_logo.png"
 import righta from '../images/right-arrow.svg'
 import swap2 from '../images/swap2.svg'
+import filter from '../images/filter.svg'
 function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
-  const [swapFromToken, setSwapFromToken] = useState("");
-  const [swapToToken, setSwapToToken] = useState("");
+  const assets = [
+    { name: 'SOL', symbol: 'SOL', mint: 'So11111111111111111111111111111111111111112', decimals: 9, imgURL: SOL },
+    { name: 'USDC', symbol: 'USDC', mint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', decimals: 6, imgURL: USD },
+    { name: 'BONK', symbol: 'BONK', mint: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263', decimals: 5, imgURL: BONK },
+    { name: 'WIF', symbol: 'WIF', mint: 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm', decimals: 6, imgURL: WIF },
+  ];
+  const [swapFromToken, setSwapFromToken] = useState(assets[0].symbol);
+  const [swapToToken, setSwapToToken] = useState(assets[1].symbol);
   const [swapAmount, setSwapAmount] = useState("");
   const [swapQuote, setSwapQuote] = useState(null);
   const [finalSwapAmount, setFinalSwapAmount] = useState("");
@@ -21,12 +28,7 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
   const [storedPassword, setStoredPassword] = useState("");
   const { Option } = Select;
 
-  const assets = [
-    { name: 'SOL', symbol: 'SOL', mint: 'So11111111111111111111111111111111111111112', decimals: 9, imgURL: SOL },
-    { name: 'USDC', symbol: 'USDC', mint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', decimals: 6, imgURL: USD },
-    { name: 'BONK', symbol: 'BONK', mint: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263', decimals: 5, imgURL: BONK },
-    { name: 'WIF', symbol: 'WIF', mint: 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm', decimals: 6, imgURL: WIF },
-  ];
+
   const selectedAsset = assets.find(asset => asset.symbol === swapToToken);
 
 
@@ -171,7 +173,10 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
 
   return (
     <>
-      <h3 className="text-white font-bold pb-6">Swap</h3>
+      <div className="pb-6 flex items-center justify-center w-full relative">
+        <h3 className="text-white font-bold">Swap</h3>
+        <img src={filter} alt="Filter" className="absolute right-0" />
+      </div>
       <div className="py-[15px] px-[10px] flex flex-col w-full gap-[11px] bg-[#080808] rounded-[8px]">
         <div className="flex items-center justify-between">
           <div className="text-[#474747] text-[13px] font-normal font-['Urbanist']">Source</div>

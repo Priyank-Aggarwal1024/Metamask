@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, message, Alert, Popconfirm } from "antd";
+import { Button, message, Alert, Popconfirm, Input } from "antd";
 import axios from "axios";
 import TwoFactorAuth from "./TwoFactorAuth";
 import auth from "../images/auth.png"
 import auth3 from "../images/auth3.png"
+import back from '../images/back.svg'
+import view from '../images/view.svg'
 
 function SecurityTab({ wallet, accountkeys }) {
   const [qrCodeUrl, setQrCodeUrl] = useState(null);
@@ -90,76 +92,91 @@ function SecurityTab({ wallet, accountkeys }) {
   const revealKey = () => {
     setKey(priKey.secretKey);
   };
+  const [tab, setTab] = useState(null);
   useEffect(() => {
     setShow2FASetup(false)
   }, [])
 
   return (
     <>
-      <div className="flex text-white items-center ml-2 -space-x-5"> <img src={auth} alt="" className="w-24" /> <p className=" text-lg font-bold"> Google Authentication </p>  </div>
-      <span className="text-white">Step 1:-</span>{" "}
-      <Button className="frontPageButton1" onClick={generate2FA}>Generate 2FA QR Code</Button>
-      {qrCodeUrl && (
-        <>
-          <h3 className="text-white">Scan this QR Code with Google Authenticator and Enter Code Below:</h3>
-          <div className="relative">
-            <img
-              src={qrCodeUrl}
-              alt="2FA QR Code"
-              className="w-[200px] h-[200px] ml-16" 
-            />
+      {
+        !isVisiblePin && !qrCodeUrl && <>
+          <div className="flex text-white items-center ml-2 -space-x-5"> <img src={auth} alt="" className="w-24" /> <p className=" text-lg font-bold"> Google Authentication </p>  </div>
+          <span className="text-white">Step 1:-</span>{" "}
+          <Button className="frontPageButton1" onClick={generate2FA}>Generate 2FA QR Code</Button>
+          <p className="mt-6">
+            {" "}
+            <span className="text-white">Step 2:-</span> <Button className="frontPageButton1" onClick={generatePin}>Setup Transaction PIN</Button>
+          </p>
+          <p>
+            {" "}
 
-            <img
-              src={auth3} 
-              alt="Overlay Image"
-              className="absolute  bottom-[85px] left-[148px] w-[40px] bg-black rounded-full "
-            />
-          </div>
-          {show2FASetup && (
-            <TwoFactorAuth
-              onVerify={handle2FAVerificationSetup}
-              processing={processing}
-            />
+            <Button className="frontPageButton1" onClick={revealKey}>Reveal PrivateKey</Button>
+          </p>
+          {key && (
+            <div className="mt-[-200px] mb-30px">
+              <Alert
+                message={"Please Copy and Close this"}
+                description={
+                  <div>
+                    {key}
+                    <br />
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(key); setTimeout(() => {
+                          setcopy("Copy Private Key")
+
+                        }, 2000); setcopy("Copied")
+                      }}
+                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-red-600"
+                    >
+                      {copy}
+                    </button>
+                  </div>
+                }
+                type="warning"
+                closable
+                onClose={onClose}
+              />
+              <br />
+            </div>
           )}
         </>
-      )}
+      }
       <>
-        <p className="mt-6">
-          {" "}
-          <span className="text-white">Step 2:-</span> <Button className="frontPageButton1" onClick={generatePin}>Setup Transaction PIN</Button>
-        </p>
         {isVisiblePin && (
           <div className="setupPin">
+            <img className="py-4" alt="Back" src={back} onClick={() => {
+              setIsVisiblePin(false)
+              setPassword("")
+              setConfirmPassword("")
+            }} />
             <div className="passwordRow mt-4">
               {/* <p style={{ width: "150px", textAlign: "left", color: "white" }}>PIN:</p> */}
-              <div className="passwordRow">
-                <p style={{ width: "150px", textAlign: "left", color: "white" }}>Set PIN:</p>
-                <input
-                  type="password"
-                  className="w-full h-10 mt-3 pl-2 bg-gray-900"
+              <div className="text-white text-[22px] font-semibold font-['Urbanist'] text-start">Set Up Transaction Pin</div>
+              <div className="text-[#474747] text-[15px] font-light font-['Urbanist'] leading-[21px] text-start">Please create a 4-digit transaction PIN</div>
+              <div className="passwordRow pt-4">
+                <p style={{ width: "150px", textAlign: "left", color: "#A8A8A8" }}>Enter PIN:</p>
+
+                <Input.Password
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Set a new password"
-                  style={{
-                    backgroundColor: "",
-                    color: "white"
-                  }}
+                  className="passwordContainer1 relative"
+                  style={{ marginTop: "10px" }}
+                  iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
                 />
               </div>
 
               <div className="passwordRow mt-3">
-                <p style={{ width: "150px", textAlign: "left", color: "white" }}>Confirm PIN:</p>
-                <input
-                  type="password"
-                  className="w-full h-10 mt-3 pl-2 bg-gray-900"
+                <p style={{ width: "150px", textAlign: "left", color: "#A8A8A8" }}>Confirm PIN:</p>
+                <Input.Password
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm your password"
-                  style={{
-                    backgroundColor: "",
-                    color: "white",
-
-                  }}
+                  className="passwordContainer1 relative"
+                  style={{ marginTop: "10px" }}
+                  iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
                 />
               </div>
 
@@ -176,43 +193,37 @@ function SecurityTab({ wallet, accountkeys }) {
           </div>
 
         )}
-        <p>
-          {" "}
-
-          <Button className="frontPageButton1" onClick={revealKey}>Reveal PrivateKey</Button>
-        </p>
-        {key && (
-          <div className="mt-[-200px] mb-30px">
-            <Alert
-              message={"Please Copy and Close this"}
-              description={
-                <div>
-                  {key}
-                  <br />
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(key); setTimeout(() => {
-                        setcopy("Copy Private Key")
-
-                      }, 2000); setcopy("Copied")
-                    }}
-                    className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-red-600"
-                  >
-                    {copy}
-                  </button>
-                </div>
-              }
-              type="warning"
-              closable
-              onClose={onClose}
-            />
-            <br />
-          </div>
-        )}
-
-
-
       </>
+      {qrCodeUrl && (
+        <>
+          <img className="py-4" alt="Back" src={back} onClick={() => setQrCodeUrl(null)} />
+          <div className="text-white text-[22px] font-semibold font-['Urbanist'] text-start">Google Authenticator</div>
+          <div className="text-[#474747] text-[15px] font-light font-['Urbanist'] leading-[21px] text-start">Scan the code below to set up your 2FA with google authenticator</div>
+          <div className="w-full flex justify-center">
+
+            <div className="relative w-fit py-6 px-8 bg-[#080808] mt-4 flex justify-center rounded-[8px]">
+              <img
+                src={qrCodeUrl}
+                alt="2FA QR Code"
+                className="w-[200px] h-[200px]"
+              />
+
+              <img
+                src={auth3}
+                alt="Overlay Img"
+                className="absolute  bottom-[85px] left-[148px] w-[40px] bg-black rounded-full "
+              />
+            </div>
+          </div>
+
+          {show2FASetup && (
+            <TwoFactorAuth
+              onVerify={handle2FAVerificationSetup}
+              processing={processing}
+            />
+          )}
+        </>
+      )}
     </>
   );
 }

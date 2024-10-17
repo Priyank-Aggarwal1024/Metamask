@@ -7,6 +7,8 @@ import bs58 from "bs58";
 import * as bip39 from "bip39";
 import { derivePath } from "ed25519-hd-key";
 import wallet from "../images/wallet.png";
+import view from '../images/view.svg'
+import BackHome from "./BackHome";
 
 
 function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword }) {
@@ -28,7 +30,16 @@ function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword })
     const inp = document.querySelectorAll(".input-mnemonic");
     let str = "";
     inp.forEach(item => {
-      str += item.value;
+      str += item.value.trim();
+      str += " "
+    })
+    str = str.trim()
+    let strArr = str.split(" ")
+    inp.forEach((item, idx) => {
+      if (idx < strArr.length)
+        item.value = strArr[idx];
+      else
+        item.value = ""
     })
     setTypedSeed(str);
   }
@@ -102,6 +113,7 @@ function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword })
 
   return (
     <>
+      <BackHome />
       {loading ? (
         <div className="loading bg-black w-full flex justify-center items-center">
           <div className="mt-36">
@@ -117,24 +129,26 @@ function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword })
           </div>
         </div>
       ) : (
-        <div className="content">
+        <div className="content pt-4">
           <div className="mnemonic">
             <BulbOutlined style={{ fontSize: "20px" }} />
             <div>
               Paste your seedphrase in the field below to recover your wallet.
             </div>
           </div>
-          {showpassdiv && (<> <Input
+          {showpassdiv && (<> <Input.Password
             value={pass1}
             onChange={passAdjust}
-            className="passwordContainer1"
+            className="passwordContainer1 bg-transparent ant-input-password"
             placeholder="Enter New Password"
+            iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
           />
-            <Input
+            <Input.Password
               value={pass2}
               onChange={confirmpassAdjust}
               className="passwordContainer1"
               placeholder="Confirm New Password"
+              iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
             />
             {error && <p className="text-red-500 mt-2">{error}</p>}
             <button className="frontPageButton1" onClick={showdiv} >Set Password</button>
@@ -155,6 +169,10 @@ function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword })
                 </div>)
               }
             </div>
+            <div className="px-4 pb-4 flex items-center text-start justify-start w-full">
+              <input type="radio" name="mnemonicphase" id="mnemonicphase" className="checked:accent-[transparent]" />
+              <label htmlFor="mnemonicphase" className="pl-1 text-[#a8a8a8] text-[13px] font-light font-['Urbanist'] leading-[21px]">I have saved my mnemonic phrase</label>
+            </div>
             <Button
               disabled={typedSeed.trim().length === 0 || !password}
               className="frontPageButton1"
@@ -167,11 +185,9 @@ function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword })
           )}
           {nonValid && <p style={{ color: "red" }}>Invalid SeedPhrase</p>}
           {blankPassword && <p style={{ color: "red" }}>Enter Password</p>}
-          <p className="frontPageBottom mt-2" onClick={() => navigate("/")}>
-            <span>Back Home</span>
-          </p>
-        </div>
-      )}
+        </div >
+      )
+      }
     </>
   );
 }

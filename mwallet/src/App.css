@@ -316,6 +316,7 @@ header {
   border-radius: 8px;
   border: 1px solid #1B1B1B;
   background: var(--Accent---Grey, #080808);
+  color: #fff;
 }
 
 .passwordContainer3::placeholder {
@@ -704,4 +705,13 @@ header {
 
 .select-wallet .ant-select-selection-item {
   color: white;
+}
+
+.ant-input-password input {
+  background: transparent;
+  color: white;
+}
+
+.ant-input-password input::placeholder {
+  color: #474747;
 }

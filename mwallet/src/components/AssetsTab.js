@@ -40,37 +40,3 @@ function AssetsTab({ tokens }) {
 }
 
 export default AssetsTab;
-
-/*
-
-<List
-          className="text-white bg-[#080808] flex justify-between items-center"
-          bordered
-          itemLayout=""
-          dataSource={tokens}
-          renderItem={(item) => (
-            <List.Item style={{ textAlign: "left", color: "white" }}>
-              <List.Item.Meta
-                avatar={
-                  <Avatar
-                    src={
-                      item.symbol === "SOL"
-                        ? SOL
-                        : item.symbol === "USDC"
-                          ? USDC
-                          : item.logo || logo
-                    }
-                  />
-                }
-                description={<span style={{ color: "gray" }}>{item.name}</span>}
-                title={<span style={{ color: "white" }}>{item.symbol}</span>}
-              />
-              <div>
-                {(Number(item.amountRaw) / 10 ** Number(item.decimals)).toFixed(2)} Tokens
-              </div>
-            </List.Item>
-          )}
-        />
-
-
-*/
