@@ -3,7 +3,7 @@
 .App {
   text-align: center;
   width: 350px;
-  height: 700px;
+  /* height: 700px; */
   justify-content: flex-start;
   align-items: center;
   display: flex;
@@ -722,4 +722,8 @@ header {
 
 .scrollbar-none {
   scrollbar-width: none;
+}
+
+.bottomsvg {
+  fill: #474747;
 }

@@ -28,7 +28,7 @@ function AssetsTab({ tokens }) {
           </div>
           <div className="">
             <div className="text-right text-white text-[13px] font-medium font-['Urbanist']">$0</div>
-            <div className="text-right text-[#a8a8a8] text-[13px] font-light font-['Urbanist']">+0.78%</div>
+            <div className="text-right text-[#a8a8a8] text-[13px] font-light font-['Urbanist']">+0%</div>
           </div>
         </div>)
 

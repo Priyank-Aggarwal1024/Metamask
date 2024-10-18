@@ -26,7 +26,6 @@ function ReceiveTab({ wallet }) {
                 </div> */}
                     <div className="flex w-full gap-1.5">
                         <div className="w-full py-[11px] text-center text-[15px] font-urbanist font-[600] rounded-[10px] bg-[#722AE8] cursor-pointer" onClick={handleCopy}>{copySuccess ? copySuccess : "Copy"}</div>
-                        <div className="w-full py-[11px] text-center text-[15px] font-urbanist font-[600] rounded-[10px] bg-[#1D1D1D] cursor-pointer">Share</div>
                     </div>
                 </div>
             </div>

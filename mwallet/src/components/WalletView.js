@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Divider, Spin, Tabs, message, Button, List } from "antd";
-import { LogoutOutlined, PlusCircleOutlined, ArrowLeftOutlined, CheckCircleFilled, CheckCircleOutlined } from "@ant-design/icons";
+import { message, Button, List, Spin } from "antd";
+import { ArrowLeftOutlined, CheckCircleFilled, CheckCircleOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { Keypair } from "@solana/web3.js";
@@ -24,9 +24,15 @@ import bs58 from "bs58";
 import TransactionHistory from "./TransactionHistory";
 import ReceiveTab from "./ReceiveTab";
 import BackArrow from "./BackArrow";
+import setting from '../images/setting.svg'
+import scan2 from '../images/scan2.svg'
+import security2 from '../images/security2.svg'
+import key4 from '../images/key4.svg'
+import triangle from '../images/triangle.svg'
+import sendb from '../images/sendb.svg'
+import recieveb from '../images/recieveb.svg'
 
-
-function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account, authTab }) {
+function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account, authTab, setAuthTab, setSelectedChain }) {
   const navigate = useNavigate();
   const [tokens, setTokens] = useState(null);
   const [nfts, setNfts] = useState(null);
@@ -48,6 +54,8 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
   const [error, setError] = useState(null);
   const [usd, setusd] = useState(0);
   const [tab, setTab] = useState(4)
+  const [openModal, setOpenModal] = useState(false)
+
   const handleAccountSelection = (wallet) => {
     const selectedKey = accountkeys.find(key => key.publicKey === wallet);
     if (selectedKey) {
@@ -58,7 +66,13 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
       });
     }
   };
-
+  const handleWalletDropDown = () => {
+    if (showPopup) {
+      closePopup()
+    } else {
+      handleImportClick();
+    }
+  }
   useEffect(() => {
     const fetchAndSetBalance = async () => {
       if (wallet) {
@@ -298,16 +312,100 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
   }, [tab])
   return (
     <>
-      {tab !== 2 && tab !== 1 && tab !== 3 && tab !== 5 && tab !== 6 && <>
+      {
+        openModal && <div className="absolute z-[11] bg-[#ffffff33] h-[560px] w-[350px]" onClick={() => setOpenModal(false)}></div>
+      }
+      {tab === 4 && <>
         <div className="gradient-blue z-[1]"></div>
         <div className="content relative bg-black overflow-x-hidden overflow-y-hidden overflow-hidden max-w-[350px] w-full">
+          <div className="w-full">
+            <header className="p-4 flex items-center justify-between text-white w-full">
+              <div className="w-7"></div>
+              <div
+                className="bg-transparent border-[0.8px] border-[#c6b8f8] px-2 h-[30px] select-wallet rounded-[10px] text-white flex justify-center items-center gap-2 cursor-pointer relative z-[4]"
+                onClick={handleWalletDropDown}
+              >
+                <span className="">Wallet</span>
+                <img src={triangle} alt="triangle" className="w-2 h-2" />
+              </div>
+              <div className="pr-2 relative z-[16]">
+                <img src={setting} className="" alt="Network Modal" onClick={() => setOpenModal(!openModal)} />
+                {
+                  openModal && <>
+                    <div className="w-[208px] bg-[#080808] rounded-[10px] absolute top-[150%] right-0 z-[10]">
+                      <div className="w-full px-2 py-2.5">
+                        <div className="flex flex-col w-full bg-[#161616] rounded-[10px]">
+
+                          <div className="w-full p-2 flex items-center justify-between cursor-pointer"
+                            onClick={() => {
+                              setSelectedChain("mainnet")
+                              setOpenModal(false)
+                            }}
+                          >
+                            <p className={`font-urbanist text-[13px] font-[500] ${selectedChain === "mainnet" ? "text-[#9945FF]" : "text-[#fff]"}`}>Switch to Mainnet</p>
+                            {
+                              selectedChain === "mainnet" && <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M3.75 10.5L6.375 13.125L14.25 4.875" stroke="#9945FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            }
+                          </div>
+                          <div className="w-full h-[1px] bg-[#2A2A2A]"></div>
+                          <div className="w-full p-2 flex items-center justify-between cursor-pointer"
+                            onClick={() => {
+                              setSelectedChain("devnet")
+                              setOpenModal(false)
+                            }}
+                          >
+                            <p className={`font-urbanist text-[13px] font-[500] ${selectedChain === "devnet" ? "text-[#9945FF]" : "text-[#fff]"}`}>Switch to Devnet</p>
+                            {
+                              selectedChain === "devnet" && <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M3.75 10.5L6.375 13.125L14.25 4.875" stroke="#9945FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            }
+                          </div>
+
+                        </div>
+                      </div>
+                      {wallet &&
+                        <>
+                          <div className="my-[3px] h-[1px] bg-[#1D1D1D] w-full"></div>
+                          <div className="px-2 pb-4 pt-2.5 w-full flex flex-col gap-4">
+                            <div className="text-[#474747] text-[13px] text-start font-medium font-['Urbanist']">Security</div>
+                            <div className="flex items-center cursor-pointer" onClick={() => {
+                              setAuthTab(() => ({ tab: 2, innerTab: 1 }))
+                              setOpenModal(false)
+                            }}>
+                              <img src={scan2} alt="Scan" />
+                              <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Generate 2FA QR code</div>
+                            </div>
+                            <div className="flex items-center cursor-pointer" onClick={() => {
+                              setAuthTab(() => ({ tab: 2, innerTab: 2 }))
+                              setOpenModal(false)
+                            }}>
+                              <img src={security2} alt="Security" />
+                              <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Setup transaction pin</div>
+                            </div>
+                            <div className="flex items-center cursor-pointer" onClick={() => {
+                              setAuthTab(() => ({ tab: 2, innerTab: 3 }))
+                              setOpenModal(false)
+                            }}>
+                              <img src={key4} alt="Key" />
+                              <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Reveal private Key</div>
+                            </div>
+                          </div>
+                        </>
+                      }
+                    </div>
+                  </>
+                }
+              </div>
+            </header>
+          </div>
           <div className="z-[2] max-w-full w-full">
-            <div className="addButton text-white" onClick={handleImportClick}>
-              <PlusCircleOutlined />
-            </div>
-            <WalletHeader wallet={wallet} selectedChain={selectedChain} balance={balance} />
-            <div className="text-[#A8A8A8] font-sans text-xs mb-2.5">Total Balance</div>
-            <div className="font-bold text-white text-[40px] flex items-center justify-center gap-1">
+            <WalletHeader
+              wallet={wallet} />
+            <div className="text-[#A8A8A8] font-sans text-xs">Total Balance</div>
+            <div className="font-bold text-white text-[40px] leading-[43px] flex items-center justify-center gap-1">
               <p>{balance} SOL</p>
               <FontAwesomeIcon
                 icon={faSyncAlt}
@@ -329,19 +427,26 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                   <div className=""
                     onClick={() => setTab(1)}
                   >
-                    <img src={send} alt="Send" />
+                    <div className="w-[70px] h-[70px] rounded-full bg-[#1D1D1D] flex justify-center items-center hover:bg-[#000000e5] transition-all duration-200">
+
+                      <img src={send} alt="Send" className=" -ml-1 -mb-1" />
+                    </div>
                     <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Send</div>
                   </div>
                   <div className=""
                     onClick={() => setTab(6)}
                   >
-                    <img src={recieve} alt="Receive" />
+                    <div className="w-[70px] h-[70px] rounded-full bg-[#1D1D1D] flex justify-center items-center hover:bg-[#000000e5] transition-all duration-200">
+                      <img src={recieve} alt="Receive" className="" />
+                    </div>
                     <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Receive</div>
                   </div>
                   <div className=""
                     onClick={() => setTab(3)}
                   >
-                    <img src={swap} alt="Swap" />
+                    <div className="w-[70px] h-[70px] rounded-full bg-[#1D1D1D] flex justify-center items-center hover:bg-[#000000e5] transition-all duration-200">
+                      <img src={swap} alt="Swap" />
+                    </div>
                     <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Swap</div>
                   </div>
                 </div>
@@ -405,14 +510,14 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
           </div>
           <div className="flex items-center justify-center px-4 w-full border-t-[1px] border-[#1D1D1D] gap-[35px] py-6 mt-auto sticky bottom-0 z-[10] bg-black">
             {
-              tab === 4 ? <img src={assetfill} alt={"Assets"} className="w-[32px] h-[32px] cursor-pointer" onClick={() => setTab(4)} /> : <img src={asset} alt={"Assets"} className="w-[32px] h-[32px] cursor-pointer" onClick={() => setTab(4)} />
+              tab === 4 ? <img src={assetfill} alt={"Assets"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(4)} /> : <img src={asset} alt={"Assets"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(4)} />
             }
-            {tab === 5 ? <img src={filltransactionImg} alt={"Transaction"} className="w-[32px] h-[32px] cursor-pointer" onClick={() => setTab(5)} /> : <img src={transactionImg} alt={"Transaction"} className="w-[32px] h-[32px] cursor-pointer" onClick={() => setTab(5)} />}
+            {tab === 5 ? <img src={filltransactionImg} alt={"Transaction"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(5)} /> : <img src={transactionImg} alt={"Transaction"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(5)} />}
             {
-              tab === 3 ? <img src={fillswap} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} /> : <img src={swap3} alt={"Swap"} className="w-[32px] h-[32px] cursor-pointer" onClick={() => setTab(3)} />
+              tab === 3 ? <img src={fillswap} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} /> : <img src={swap3} alt={"Swap"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(3)} />
             }
-            <img src={send} alt={"Send"} className="w-[32px] h-[32px] cursor-pointer" onClick={() => setTab(1)} />
-            <img src={recieve} alt={"Recieve"} className="w-[32px] h-[32px] cursor-pointer" onClick={() => setTab(6)} />
+            <img src={sendb} alt={"Send"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(1)} />
+            <img src={recieveb} alt={"Recieve"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(6)} />
           </div>
         </div>
       </>}

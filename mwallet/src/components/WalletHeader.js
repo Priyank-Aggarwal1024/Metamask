@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Tooltip, QRCode, Select } from "antd";
+import { Tooltip, QRCode } from "antd";
 import SOL from "../images/Solana_logo.png"
-import ibutton from '../images/ibutton.svg'
 
-function WalletHeader({ wallet, selectedChain, balance }) {
+
+function WalletHeader({ wallet }) {
   const [copySuccess, setCopySuccess] = useState('');
 
   const handleCopy = () => {
@@ -11,22 +11,8 @@ function WalletHeader({ wallet, selectedChain, balance }) {
     setCopySuccess('Copied!');
     setTimeout(() => setCopySuccess(''), 2000);
   };
-  const handleChange = () => {
-
-  }
   return (
     <>
-      <Select
-        defaultValue="Wallet"
-        className="bg-transparent border-[0.8px] select-wallet rounded-[10px] text-white w-[86px] my-2 mb-3"
-        onChange={handleChange}
-        options={[
-          {
-            value: 'Wallet',
-            label: 'Wallet',
-          }
-        ]}
-      />
       <div className="w-96">
         <Tooltip
           className="tools text-white" overlayStyle={{ width: '500px' }}
@@ -44,15 +30,14 @@ function WalletHeader({ wallet, selectedChain, balance }) {
                 </div> */}
                 <div className="flex w-full gap-1.5">
                   <div className="w-full py-[11px] text-center text-[15px] font-urbanist font-[600] rounded-[10px] bg-[#722AE8] cursor-pointer" onClick={handleCopy}>{copySuccess ? copySuccess : "Copy"}</div>
-                  <div className="w-full py-[11px] text-center text-[15px] font-urbanist font-[600] rounded-[10px] bg-[#1D1D1D] cursor-pointer">Share</div>
                 </div>
               </div>
             </div>
           }
         >
-          <div className="mt-[-6px] max-w-[350px] w-full">
+          {/* <div className="mt-[-6px] max-w-[350px] w-full">
             {wallet.slice(0, 4)}...{wallet.slice(38)}
-          </div>
+          </div> */}
         </Tooltip>
       </div>
     </>

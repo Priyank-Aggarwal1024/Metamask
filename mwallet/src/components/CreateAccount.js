@@ -25,7 +25,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
     })
     setMnemonic(str);
   }
-  console.log(mnemonic);
+  const [copyText, setCopyText] = useState("Copy Your SeedPhrase")
   async function generateWallet() {
     const newMnemonic = bip39.generateMnemonic();
     setMnemonic(newMnemonic);
@@ -37,6 +37,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
     const secretKey = bs58.encode(keypair.secretKey);
     setNewSeedPhrase(secretKey);
   }
+
   function setWalletAndMnemonic() {
     const keypair = Keypair.fromSecretKey(bs58.decode(newSeedPhrase));
     let account;
@@ -62,8 +63,16 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
     }, 2000);
 
   }
-
-  console.log(mnemonic)
+  const handleCopySeedphrase = () => {
+    navigator.clipboard.writeText(mnemonic)
+    setCopyText("SeedPhrase Copied!");
+    setTimeout(() => {
+      setCopyText("Copy Your SeedPhrase")
+    }, 5000)
+  }
+  useEffect(() => {
+    generateWallet()
+  }, [])
 
   return (
     <>
@@ -86,14 +95,6 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
         <div className="content bg-black pt-4">
           <h1 className="text-white font-sans text-2xl mt-5 font-semibold w-full pl-4 text-start">Mnemonic Phrase</h1>
           <h3 className="text-[#474747] font-sans text-xs w-full mt-2 pl-4 text-start">The phrase is the only way for you to recover your wallet do not share with anyone</h3>
-
-          <Button
-            className="frontPageButton1"
-            type="primary"
-            onClick={() => generateWallet()}
-          >
-            Create Account
-          </Button>
           <div className="grid grid-cols-3 gap-[7px] py-4 w-full px-4">
             {
               arr?.map((item, idx) => <div className="py-2.5 px-2  bg-[#080808]  border-[0.8px] border-[#1D1D1D] rounded-[8px] flex gap-1 items-center" key={idx}>
@@ -106,11 +107,11 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
           <Button
             className="frontPageButton1"
             type="default"
-            onClick={() => navigator.clipboard.writeText(mnemonic)}
+            onClick={handleCopySeedphrase}
             hidden={!newSeedPhrase}
 
           >
-            Copy Your SeedPhrase
+            {copyText}
           </Button>
           <Button
             className="frontPageButton1"

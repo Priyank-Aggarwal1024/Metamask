@@ -68,7 +68,7 @@ function Enterpass({ password, setPassword, confirmpassword, setConfirmPassword 
                         className="frontPageButton1"
                         type="primary"
                         onClick={handleSubmit}
-                        disabled={pass1 == "" && pass2 == ""}
+                        disabled={pass1 === "" && pass2 === ""}
                     >
                         Proceed
                     </button>

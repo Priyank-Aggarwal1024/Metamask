@@ -39,7 +39,7 @@ function Home() {
       <div className={`content1 h-[500px] bg-black ${showPopup ? 'fixed inset-0' : ''}`}>
         <img src={trap} alt="trap" className="absolute top-0 z-1 max-w-[350px]" />
         <img src={img} alt="logo" className="frontPageLogo mb-4 relative z-[4]" />
-        <h2 className="text-white text-3xl font-bold mb-0">Metasafe</h2>
+        <h2 className="text-white text-3xl font-bold mb-0">MarvelX</h2>
         <h4 className="text-[rgb(71,71,71)] mt-2">The Solana Non Custodial Wallet</h4>
         <div className="mt-60 w-80">
           <button
