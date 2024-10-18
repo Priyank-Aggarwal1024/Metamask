@@ -26,7 +26,7 @@ const App = () => {
           <div className="flex items-center space-x-3">
             <img src={key} alt="Icon 1" className="w-7" />
             <p className="text-sm leading-relaxed text-start">
-              Manage your Solana tokens in one secure, easy-to-use wallet. Metasafe ensures your assets are safe with non-custodial storage.
+              Manage your Solana tokens in one secure, easy-to-use wallet. MarvelX ensures your assets are safe with non-custodial storage.
             </p>
           </div>
           <div className="flex items-center space-x-3">
@@ -38,7 +38,7 @@ const App = () => {
           <div className="flex items-center space-x-3">
             <img src={key3} alt="Icon 3" className="w-7" />
             <p className="text-sm leading-relaxed text-start">
-              Discover and interact with your favorite decentralized applications (dApps) in Metasafe.
+              Discover and interact with your favorite decentralized applications (dApps) in MarvelX.
             </p>
           </div>
         </div>
