@@ -10,14 +10,14 @@ const App = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
-    <div className="bg-black w-[350px] h-[550px] flex flex-col items-center justify-center text-white font-sans p-6">
+    <div className="bg-black w-[360px] h-[568px] flex flex-col items-center justify-center text-white font-sans p-6">
       <div className="max-w-sm space-y-8">
         <div className="text-center">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <img src={img} alt="Metasafe Logo" className="w-10" />
-            <h1 className="text-4xl font-extrabold tracking-tight">MarvelX</h1>
+          <div className="flex items-center justify-center flex-col gap-1 mb-2">
+            <img src={img} alt="Metasafe Logo" className="w-[94px]" />
+            <h1 className="text-2xl font-extrabold tracking-tight leading-[1]">MarvelX</h1>
           </div>
-          <p className="text-sm text-gray-400">
+          <p className="text-[12px] text-[#474747]">
             The Solana Non Custodial Wallet
           </p>
         </div>

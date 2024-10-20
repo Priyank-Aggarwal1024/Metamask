@@ -35,7 +35,7 @@ function WalletHeader({ wallet }) {
             </div>
           }
         >
-          {/* <div className="mt-[-6px] max-w-[350px] w-full">
+          {/* <div className="mt-[-6px] max-w-[360px] w-full">
             {wallet.slice(0, 4)}...{wallet.slice(38)}
           </div> */}
         </Tooltip>

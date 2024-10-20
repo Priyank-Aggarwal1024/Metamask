@@ -23,9 +23,9 @@ function App() {
   const [authTab, setAuthTab] = useState(null);
 
   return (
-    <>
+    <div className="outer-app relative h-full">
 
-      <div className={`header relative max-w-[350px] p-0 m-0 ${!wallet && "pt-8"}`}>
+      <div className={`header relative max-w-[360px] p-0 m-0 ${!wallet && "pt-8"}`}>
 
       </div>
 
@@ -123,7 +123,7 @@ function App() {
           </Routes>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

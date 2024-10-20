@@ -31,7 +31,8 @@ import key4 from '../images/key4.svg'
 import triangle from '../images/triangle.svg'
 import sendb from '../images/sendb.svg'
 import recieveb from '../images/recieveb.svg'
-
+import acccheck from '../images/account-check.svg'
+import wallet1 from '../images/wallet1.svg'
 function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account, authTab, setAuthTab, setSelectedChain }) {
   const navigate = useNavigate();
   const [tokens, setTokens] = useState(null);
@@ -313,13 +314,13 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
   return (
     <>
       {
-        openModal && <div className="absolute z-[11] bg-[#ffffff33] h-[560px] w-[350px]" onClick={() => setOpenModal(false)}></div>
+        openModal && <div className="absolute z-[11] bg-[#ffffff33] h-[600px] w-[360px]" onClick={() => setOpenModal(false)}></div>
       }
       {tab === 4 && <>
         <div className="gradient-blue z-[1]"></div>
-        <div className="content relative bg-black overflow-x-hidden overflow-y-hidden overflow-hidden max-w-[350px] w-full">
+        <div className="wallet-content relative bg-black overflow-x-hidden overflow-y-hidden overflow-hidden max-w-[360px] w-full">
           <div className="w-full">
-            <header className="p-4 flex items-center justify-between text-white w-full">
+            <div className="p-4 pt-[25px] pb-[35px] flex items-center justify-between text-white w-full">
               <div className="w-7"></div>
               <div
                 className="bg-transparent border-[0.8px] border-[#c6b8f8] px-2 h-[30px] select-wallet rounded-[10px] text-white flex justify-center items-center gap-2 cursor-pointer relative z-[4]"
@@ -399,7 +400,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                   </>
                 }
               </div>
-            </header>
+            </div>
           </div>
           <div className="z-[2] max-w-full w-full">
             <WalletHeader
@@ -462,48 +463,53 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                 <div className="p-6">
                   <div className="flex items-center mb-6">
                     <ArrowLeftOutlined className="text-xl mr-4 cursor-pointer" onClick={closePopup} />
-                    <h3 className="text-sm flex-grow text-center">Select Account</h3>
+                    <h3 className="text-sm flex-grow text-center">Wallet</h3>
                   </div>
-                  <List
-                    dataSource={accountkeys}
-                    className="max-h-[250px] overflow-y-auto scrollbar-none"
-                    renderItem={(account) => (
-                      <List.Item
-                        onClick={() => handleAccountSelect(account)}
-                        className="cursor-pointer hover:bg-gray-800 transition-colors"
-                      >
-                        <div className="w-full flex items-center justify-between">
-                          <div className="flex items-center w-full">
-                            <div className="w-8">
-                              {account.publicKey === wallet ? (
-                                <CheckCircleFilled className="text-purple-500" />
-                              ) : (
-                                <CheckCircleOutlined className="text-gray-400" />
-                              )}
-                            </div>
-                            <span className="text-white flex-grow text-center">
-                              {truncateAddress(account.publicKey)}
-                            </span>
+                  <div
+                    className="max-h-[250px] overflow-y-auto scrollbar-none bg-[#080808] rounded-[8px] px-[15px] py-2 flex flex-col w-full gap-[15px]"
+                  >
 
-                            <span className="text-green-400 ml-4">
-                              {loading && selectedChain === "mainnet"
-                                ? "Loading..."
-                                : selectedChain === "mainnet"
-                                  ? `$${account.usdbal}`
-                                  : "$0.00"}
-                            </span>
+                    {
+                      accountkeys.map((account, idx) => (
+                        <>
+                          <div key={idx}
+                            onClick={() => handleAccountSelect(account)}
+                            className="cursor-pointer hover:bg-gray-800 transition-colors w-full flex items-center justify-between"
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <img src={wallet1} alt="Wallet Img" />
+                              <div>
+                                <p className="text-white text-[13px] text-start">
+                                  {truncateAddress(account.publicKey)}
+                                </p>
+                                <p className="text-[#474747] text-[13px] text-start">
+                                  {loading && selectedChain === "mainnet"
+                                    ? "Loading..."
+                                    : selectedChain === "mainnet"
+                                      ? `$${account.usdbal}`
+                                      : "$0.00"}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="w-8">
+                              {account.publicKey === wallet && <img src={acccheck} alt="Check" />}
+                            </div>
                           </div>
-                        </div>
-                      </List.Item>
-                    )}
-                  />
+                          {idx !== accountkeys.length - 1 && <div className="w-full">
+                            <div className="bg-[#161616] h-[1px] w-full"></div>
+                          </div>}
+                        </>
+                      ))
+                    }
+
+                  </div>
 
                   {error && (
                     <p style={{ color: "red" }}>Error: {error}</p>
                   )}
 
                 </div>
-                <button className="frontPageButton1 mb-4" style={{ marginTop: "0px" }} onClick={show}>Add New Account</button>
+                <button className="frontPageButton1 mb-4" style={{ marginTop: "0px" }} onClick={show}>Add Wallet</button>
               </div>
             )}
 
@@ -521,7 +527,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
           </div>
         </div>
       </>}
-      {tab !== 4 && tab !== null && <div className="bg-black p-5 h-[560px] overflow-y-auto scrollbar-none w-[350px]">
+      {tab !== 4 && tab !== null && <div className="bg-black p-5 h-[600px] overflow-y-auto scrollbar-none w-[360px]">
         {tab !== 2 && <BackArrow setTab={setTab} />}
         {
           tab === 2 ? <SecurityTab wallet={wallet} accountkeys={accountkeys} authTab={authTab} setTab={setTab} /> : tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
