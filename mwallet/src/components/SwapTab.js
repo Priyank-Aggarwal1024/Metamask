@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { message, Select, ConfigProvider } from "antd";
 import axios from "axios";
-import { Connection, PublicKey, Keypair, VersionedTransaction } from "@solana/web3.js";
+import { Connection, Keypair, VersionedTransaction } from "@solana/web3.js";
 import bs58 from "bs58";
 import USD from '../images/usd-coin.png';
 import BONK from '../images/bonk.png';
@@ -179,7 +179,7 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
       </div>
       <div className="py-[15px] px-[10px] flex flex-col w-full gap-[11px] bg-[#080808] rounded-[8px]">
         <div className="flex items-center justify-between">
-          <div className="text-[#474747] text-[13px] font-normal font-['Urbanist']">Source</div>
+          <div className="text-[#474747] text-[13px] font-normal font-urbanist">Source</div>
           <div className="flex justify-end space-x-3 text-gray-400 ">
             <button className="hover:text-purple-900 p-1 rounded-[8px] border-[#1D1D1D] border-[.8px]" onClick={() => setSwapAmount((balance * 0.1).toFixed(2))}>10%</button>
             <button className="hover:text-purple-900 p-1 rounded-[8px] border-[#1D1D1D] border-[.8px]" onClick={() => setSwapAmount((balance * 0.2).toFixed(2))}>20%</button>
@@ -194,66 +194,16 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
               <ConfigProvider
                 theme={{
                   token: {
-                    colorBgContainer: 'black',
+                    colorBgContainer: '#080808',
                     colorText: 'white',
-                    colorBorder: 'black',
-
-
+                    colorBorder: '#080808',
                   },
                 }}
               >
-                {/* <Select
-                  placeholder="Select"
-                  optionLabelProp="label"
-                  style={{
-                    borderRadius: "10px",
-                    width: "120px",
-                    backgroundColor: "black",
-                    color: "white",
-                    height: "35px",
-                    border: "3px solid black",
-                  }}
-                  dropdownStyle={{
-                    backgroundColor: "black",
-                    color: "white",
-                    border: "1px solid #333",
-                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-                  }}
-                >
-                  {tokens &&
-                    tokens.map((token) => (
-                      <Option
-                        key={token.symbol} // Changed to token.symbol
-                        value={token.symbol}
-                        style={{ backgroundColor: "black", color: "white" }}
-                        label={
-                          <div style={{ display: 'flex', alignItems: 'center', backgroundColor: "black", color: "white" }}>
-                            <img
-                              src={SOL}
-                              alt={token.symbol}
-                              style={{ width: '20px', height: '20px', marginRight: '10px' }}
-                            />
-                            {token.symbol}
-                          </div>
-                        }
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', backgroundColor: "black", color: "white" }}>
-                          <img
-                            src={SOL}
-                            alt={token.symbol}
-                            style={{ width: '20px', height: '20px', marginRight: '10px' }}
-                          />
-                          {token.symbol}
-                        </div>
-                      </Option>
-                    ))}
-                </Select> */}
-
-
                 <Select
                   style={{
                     width: '120px',
-                    backgroundColor: 'black',
+                    backgroundColor: '#080808',
                     color: 'white',
                   }}
                   value={swapFromToken || undefined}
@@ -275,13 +225,8 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
                   ))}
                 </Select>
               </ConfigProvider>
-
-
-
-
             </div>
           </div>
-
           <div className="ml-12">
             <input
               style={{
@@ -296,26 +241,40 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
             />
           </div>
         </div>
-        <div className="text-[#a8a8a8] text-start text-[13px] font-normal font-['Urbanist']">Balance: {balance} SOL</div>
+        <div className="text-[#a8a8a8] text-start text-[13px] font-normal font-urbanist">Balance: {balance} SOL</div>
+        {
+          balance < swapAmount && <>
+            <div className="w-full h-[0px] border border-[#1d1d1d]"></div>
+            <div className="flex justify-between">
+              <div className="text-[#CC3A3A] text-[13px] font-normal font-urbanist flex  items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="pr-1" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M9 16.5C13.1421 16.5 16.5 13.1421 16.5 9C16.5 4.85786 13.1421 1.5 9 1.5C4.85786 1.5 1.5 4.85786 1.5 9C1.5 13.1421 4.85786 16.5 9 16.5Z" stroke="#CC3A3A" strokeWidth="1.5" />
+                  <path d="M8.99414 11.25H9.00164" stroke="#CC3A3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M9 9V6" stroke="#CC3A3A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span>Insufficient balance</span> </div>
+              <img src={righta} alt="Right Arrow" className="rotate-90" />
+            </div>
+          </>
+        }
       </div>
       <div className="py-[15px] px-[10px] flex flex-col w-full gap-[11px] bg-[#080808] rounded-[8px] mt-[10px] relative" >
         <img src={swap2} alt="Swap" className="absolute z-[2] left-[50%] -top-[20px] translate-x-[-50%]" />
-        <div className="text-[#474747] text-[13px] font-normal font-['Urbanist'] text-start">Destination</div>
+        <div className="text-[#474747] text-[13px] font-normal font-urbanist text-start">Destination</div>
         <div className="swapContainer" style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-
           <ConfigProvider
             theme={{
               token: {
-                colorBgContainer: 'black',
+                colorBgContainer: '#080808',
                 colorText: 'white',
-                colorBorder: 'black',
+                colorBorder: '#080808',
               },
             }}
           >
             <Select
               style={{
                 width: '120px',
-                backgroundColor: 'black',
+                backgroundColor: '#080808',
                 color: 'white',
               }}
               value={selectedAsset ? selectedAsset.symbol : undefined}
@@ -363,7 +322,7 @@ function SwapTab({ wallet, tokens, balance, getAccountTokens, selectedChain }) {
         </div>
         <div className="w-full h-[0px] border border-[#1d1d1d]"></div>
         <div className="flex justify-between">
-          <div className="text-[#616161] text-[13px] font-normal font-['Urbanist']">1 BTC ~ USD: 50,000</div>
+          <div className="text-[#616161] text-[13px] font-normal font-urbanist">1 SOL ~ USD: 153.80</div>
           <img src={righta} alt="Right Arrow" className="rotate-90" />
         </div>
       </div>

@@ -12,9 +12,8 @@ function TransactionHistory({ wallet, selectedChain }) {
     };
     return (
         <div>
-            <h1 className="font-bold text-white py-4 font-urbanist">Transaction</h1>
             <div className="flex gap-[30px] flex-col w-full">
-                <div className="text-[#474747] text-lg font-medium font-['Urbanist'] text-start">Today</div>
+                <div className="text-[#474747] text-lg font-medium font-urbanist text-start">Today</div>
                 {transactionHistory.length > 0 ? (
                     <ul className="transaction-history-list bg-black flex flex-col gap-5">
                         {transactionHistory.slice().reverse().map((item, index) => (
@@ -23,14 +22,14 @@ function TransactionHistory({ wallet, selectedChain }) {
                                     onClick={() => handleItemClick(index)}
                                     className="flex items-center gap-2"
                                 >
-                                    <div>
-                                        <img src={item.type == "Received" || item.type == "Swap In" ? recieve : item.type == "Sent" ? sent : bought} alt="asset" className="w-9 h-9" />
+                                    <div className="min-w-9 h-9 rounded-full bg-[#080808] flex justify-center items-center">
+                                        <img src={item.type === "Received" || item.type === "Swap In" ? recieve : item.type === "Sent" ? sent : bought} alt="asset" className="w-4 h-4" />
                                     </div>
 
                                     <div className="flex w-full justify-between items-center text-white text-[13px]">
                                         <div className="text-start">
                                             <p className="">{item.type} {item.token || "SOL"}</p>
-                                            <p className="pt-0.5 text-[#474747]">{item.type == "Received" ? "From" : item.type == "Sent" || item.type == "Swap In" ? "To" : "Via"} {wallet.slice(0, 4)}...{wallet.slice(38)}</p>
+                                            <p className="pt-0.5 text-[#474747]">{item.type === "Received" ? "From" : item.type === "Sent" || item.type === "Swap In" ? "To" : "Via"} {wallet.slice(0, 4)}...{wallet.slice(38)}</p>
                                         </div>
                                         <div className="text-right">
                                             <div className="text-[#FE4444]">{item.amount} {item.token || "SOL"}</div>

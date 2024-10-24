@@ -144,7 +144,7 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
           } */}
           {key && (
             <div className="">
-              <img className="pb-4" alt="Back" src={back} onClick={() => {
+              <img className="pb-4 cursor-pointer" alt="Back" src={back} onClick={() => {
                 setIsVisiblePin(false)
                 setPassword("")
                 setConfirmPassword("")
@@ -181,7 +181,7 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
       <>
         {isVisiblePin && (
           <div className="setupPin">
-            <img className="pb-4" alt="Back" src={back} onClick={() => {
+            <img className="pb-4 cursor-pointer" alt="Back" src={back} onClick={() => {
               setIsVisiblePin(false)
               setPassword("")
               setConfirmPassword("")
@@ -189,8 +189,8 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
             }} />
             <div className="passwordRow mt-4">
               {/* <p style={{ width: "150px", textAlign: "left", color: "white" }}>PIN:</p> */}
-              <div className="text-white text-[22px] font-semibold font-['Urbanist'] text-start">Set Up Transaction Pin</div>
-              <div className="text-[#474747] text-[15px] font-light font-['Urbanist'] leading-[21px] text-start">Please create a 4-digit transaction PIN</div>
+              <div className="text-white text-[22px] font-semibold font-urbanist text-start">Set Up Transaction Pin</div>
+              <div className="text-[#474747] text-[15px] font-light font-urbanist leading-[21px] text-start">Please create a 4-digit transaction PIN</div>
               <div className="passwordRow pt-4">
                 <p style={{ width: "150px", textAlign: "left", color: "#A8A8A8" }}>Enter PIN:</p>
 
@@ -232,9 +232,9 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
       </>
       {qrCodeUrl && (
         <>
-          <img className="pb-4" alt="Back" src={back} onClick={() => { setQrCodeUrl(null); setTab(4) }} />
-          <div className="text-white text-[22px] font-semibold font-['Urbanist'] text-start">Google Authenticator</div>
-          <div className="text-[#474747] text-[15px] font-light font-['Urbanist'] leading-[21px] text-start">Scan the code below to set up your 2FA with google authenticator</div>
+          <img className="pb-4 cursor-pointer" alt="Back" src={back} onClick={() => { setQrCodeUrl(null); setTab(4) }} />
+          <div className="text-white text-[22px] font-semibold font-urbanist text-start">Google Authenticator</div>
+          <div className="text-[#474747] text-[15px] font-light font-urbanist leading-[21px] text-start">Scan the code below to set up your 2FA with google authenticator</div>
           <div className="w-full flex justify-center">
 
             <div className="relative w-fit py-6 px-8 bg-[#080808] mt-4 flex justify-center rounded-[8px]">

@@ -144,18 +144,18 @@ function SendTab({ wallet, balance, selectedChain, getAccountTokens }) {
           <div className="text-center text-white text-[15px] font-normal font-urbanist leading-[21px]">Solana</div>
         </div>
       </div>
-      <input className="text-center text-white text-[40px] font-bold font-['Urbanist'] leading-[18px] pb-[15px] border-none outline-none bg-transparent flex max-w-full placeholder:text-[20px]"
+      <input className="text-center text-white text-[40px] font-bold font-urbanist leading-[18px] pb-[15px] border-none outline-none bg-transparent flex max-w-full placeholder:text-[20px]"
         placeholder="Enter Amount"
         value={amountToSend}
         onChange={(e) => setAmountToSend(e.target.value)}
       />
-      {/* <div className="text-center text-[#474747] text-lg font-normal font-['Urbanist'] leading-[18px]"
+      {/* <div className="text-center text-[#474747] text-lg font-normal font-urbanist leading-[18px]"
       >$1,575 USD</div> */}
 
 
       <div className="pt-8">
         <div className="flex justify-between pb-2">
-          <div className="text-[#a8a8a8] text-[13px] font-normal font-['Urbanist'] leading-[18px]">To</div>
+          <div className="text-[#a8a8a8] text-[13px] font-normal font-urbanist leading-[18px]">To</div>
           <div className="w-[48px] h-[17px] justify-start items-center gap-3 flex">
             <img src={calender} alt="Calender" />
             <img src={scan} alt="scan" />

@@ -171,7 +171,7 @@ function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword })
             </div>
             <div className="px-4 pb-4 flex items-center text-start justify-start w-full">
               <input type="radio" name="mnemonicphase" id="mnemonicphase" className="checked:accent-[transparent]" />
-              <label htmlFor="mnemonicphase" className="pl-1 text-[#a8a8a8] text-[13px] font-light font-['Urbanist'] leading-[21px]">I have saved my mnemonic phrase</label>
+              <label htmlFor="mnemonicphase" className="pl-1 text-[#a8a8a8] text-[13px] font-light font-urbanist leading-[21px]">I have saved my mnemonic phrase</label>
             </div>
             <Button
               disabled={typedSeed.trim().length === 0 || !password}

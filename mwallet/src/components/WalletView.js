@@ -13,13 +13,9 @@ import SecurityTab from "./SecurityTab";
 import SwapTab from "./SwapTab";
 import send from "../images/send.svg";
 import swap from "../images/swap.svg";
-import swap3 from "../images/swap3.svg";
-import fillswap from "../images/fillswap.svg";
+
 import recieve from "../images/recieve.svg"
-import asset from '../images/asset.svg'
-import assetfill from '../images/assetfill.svg'
-import transactionImg from '../images/transaction.svg'
-import filltransactionImg from '../images/filltransaction.svg'
+
 import bs58 from "bs58";
 import TransactionHistory from "./TransactionHistory";
 import ReceiveTab from "./ReceiveTab";
@@ -29,13 +25,14 @@ import scan2 from '../images/scan2.svg'
 import security2 from '../images/security2.svg'
 import key4 from '../images/key4.svg'
 import triangle from '../images/triangle.svg'
-import sendb from '../images/sendb.svg'
-import recieveb from '../images/recieveb.svg'
 import acccheck from '../images/account-check.svg'
 import wallet1 from '../images/wallet1.svg'
+import AssetDetail from "./AssetDetail";
+import BottomNav from "./BottomNav";
 function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password, account, authTab, setAuthTab, setSelectedChain }) {
   const navigate = useNavigate();
   const [tokens, setTokens] = useState(null);
+  const [token, setToken] = useState(null)
   const [nfts, setNfts] = useState(null);
   const [balance, setBalance] = useState(0);
   const [fetching, setFetching] = useState(true);
@@ -314,7 +311,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
   return (
     <>
       {
-        openModal && <div className="absolute z-[11] bg-[#ffffff33] h-[600px] w-[360px]" onClick={() => setOpenModal(false)}></div>
+        (openModal || showPopup || showPopupdiv) && <div className="absolute z-[11] bg-[#ffffff33] h-[600px] w-[360px]" onClick={() => setOpenModal(false)}></div>
       }
       {tab === 4 && <>
         <div className="gradient-blue z-[1]"></div>
@@ -330,7 +327,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                 <img src={triangle} alt="triangle" className="w-2 h-2" />
               </div>
               <div className="pr-2 relative z-[16]">
-                <img src={setting} className="" alt="Network Modal" onClick={() => setOpenModal(!openModal)} />
+                <img src={setting} className="cursor-pointer" alt="Network Modal" onClick={() => setOpenModal(!openModal)} />
                 {
                   openModal && <>
                     <div className="w-[208px] bg-[#080808] rounded-[10px] absolute top-[150%] right-0 z-[10]">
@@ -371,27 +368,27 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                         <>
                           <div className="my-[3px] h-[1px] bg-[#1D1D1D] w-full"></div>
                           <div className="px-2 pb-4 pt-2.5 w-full flex flex-col gap-4">
-                            <div className="text-[#474747] text-[13px] text-start font-medium font-['Urbanist']">Security</div>
+                            <div className="text-[#474747] text-[13px] text-start font-medium font-urbanist">Security</div>
                             <div className="flex items-center cursor-pointer" onClick={() => {
                               setAuthTab(() => ({ tab: 2, innerTab: 1 }))
                               setOpenModal(false)
                             }}>
                               <img src={scan2} alt="Scan" />
-                              <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Generate 2FA QR code</div>
+                              <div className="text-white text-xs font-medium font-urbanist pl-[5px]">Generate 2FA QR code</div>
                             </div>
                             <div className="flex items-center cursor-pointer" onClick={() => {
                               setAuthTab(() => ({ tab: 2, innerTab: 2 }))
                               setOpenModal(false)
                             }}>
                               <img src={security2} alt="Security" />
-                              <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Setup transaction pin</div>
+                              <div className="text-white text-xs font-medium font-urbanist pl-[5px]">Setup transaction pin</div>
                             </div>
                             <div className="flex items-center cursor-pointer" onClick={() => {
                               setAuthTab(() => ({ tab: 2, innerTab: 3 }))
                               setOpenModal(false)
                             }}>
                               <img src={key4} alt="Key" />
-                              <div className="text-white text-xs font-medium font-['Urbanist'] pl-[5px]">Reveal private Key</div>
+                              <div className="text-white text-xs font-medium font-urbanist pl-[5px]">Reveal private Key</div>
                             </div>
                           </div>
                         </>
@@ -425,7 +422,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
             ) : (
               <>
                 <div className="flex justify-center gap-2.5">
-                  <div className=""
+                  <div className="cursor-pointer"
                     onClick={() => setTab(1)}
                   >
                     <div className="w-[70px] h-[70px] rounded-full bg-[#1D1D1D] flex justify-center items-center hover:bg-[#000000e5] transition-all duration-200">
@@ -434,7 +431,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                     </div>
                     <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Send</div>
                   </div>
-                  <div className=""
+                  <div className="cursor-pointer"
                     onClick={() => setTab(6)}
                   >
                     <div className="w-[70px] h-[70px] rounded-full bg-[#1D1D1D] flex justify-center items-center hover:bg-[#000000e5] transition-all duration-200">
@@ -442,7 +439,7 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                     </div>
                     <div className="text-center text-white text-[13px] font-normal font-urbanist leading-[17px] pt-2.5">Receive</div>
                   </div>
-                  <div className=""
+                  <div className="cursor-pointer"
                     onClick={() => setTab(3)}
                   >
                     <div className="w-[70px] h-[70px] rounded-full bg-[#1D1D1D] flex justify-center items-center hover:bg-[#000000e5] transition-all duration-200">
@@ -453,126 +450,126 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                 </div>
                 <div className="px-4 w-full py-4">
                   {
-                    tab === 4 && <AssetsTab tokens={tokens} />
+                    tab === 4 && <AssetsTab setTab={setTab} tokens={tokens} setToken={setToken} />
                   }
                 </div>
               </>
             )}
-            {showPopup && (
-              <div className="absolute bottom-0 left-0 right-0 bg-black text-white rounded-t-2xl shadow-lg animate-slide-up mb-[90px]">
-                <div className="p-6">
-                  <div className="flex items-center mb-6">
-                    <ArrowLeftOutlined className="text-xl mr-4 cursor-pointer" onClick={closePopup} />
-                    <h3 className="text-sm flex-grow text-center">Wallet</h3>
-                  </div>
-                  <div
-                    className="max-h-[250px] overflow-y-auto scrollbar-none bg-[#080808] rounded-[8px] px-[15px] py-2 flex flex-col w-full gap-[15px]"
-                  >
 
-                    {
-                      accountkeys.map((account, idx) => (
-                        <>
-                          <div key={idx}
-                            onClick={() => handleAccountSelect(account)}
-                            className="cursor-pointer hover:bg-gray-800 transition-colors w-full flex items-center justify-between"
-                          >
-                            <div className="flex items-center gap-2.5">
-                              <img src={wallet1} alt="Wallet Img" />
-                              <div>
-                                <p className="text-white text-[13px] text-start">
-                                  {truncateAddress(account.publicKey)}
-                                </p>
-                                <p className="text-[#474747] text-[13px] text-start">
-                                  {loading && selectedChain === "mainnet"
-                                    ? "Loading..."
-                                    : selectedChain === "mainnet"
-                                      ? `$${account.usdbal}`
-                                      : "$0.00"}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="w-8">
-                              {account.publicKey === wallet && <img src={acccheck} alt="Check" />}
+          </div>
+          {showPopup && (
+            <div className="absolute z-[16] bottom-0 left-0 right-0 bg-black text-white rounded-t-2xl shadow-lg animate-slide-up">
+              <div className="p-6">
+                <div className="flex items-center mb-6">
+                  <ArrowLeftOutlined className="text-xl mr-4 cursor-pointer" onClick={closePopup} />
+                  <h3 className="text-sm flex-grow text-center">Wallet</h3>
+                </div>
+                <div
+                  className="max-h-[250px] overflow-y-auto scrollbar-none bg-[#080808] rounded-[8px] px-[15px] py-2 flex flex-col w-full gap-[15px]"
+                >
+
+                  {
+                    accountkeys.map((account, idx) => (
+                      <>
+                        <div key={idx}
+                          onClick={() => handleAccountSelect(account)}
+                          className="cursor-pointer hover:bg-gray-800 transition-colors w-full flex items-center justify-between"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <img src={wallet1} alt="Wallet Img" />
+                            <div>
+                              <p className="text-white text-[13px] text-start">
+                                {truncateAddress(account.publicKey)}
+                              </p>
+                              <p className="text-[#474747] text-[13px] text-start">
+                                {loading && selectedChain === "mainnet"
+                                  ? "Loading..."
+                                  : selectedChain === "mainnet"
+                                    ? `$${account.usdbal}`
+                                    : "$0.00"}
+                              </p>
                             </div>
                           </div>
-                          {idx !== accountkeys.length - 1 && <div className="w-full">
-                            <div className="bg-[#161616] h-[1px] w-full"></div>
-                          </div>}
-                        </>
-                      ))
-                    }
-
-                  </div>
-
-                  {error && (
-                    <p style={{ color: "red" }}>Error: {error}</p>
-                  )}
+                          <div className="w-8">
+                            {account.publicKey === wallet && <img src={acccheck} alt="Check" />}
+                          </div>
+                        </div>
+                        {idx !== accountkeys.length - 1 && <div className="w-full">
+                          <div className="bg-[#161616] h-[1px] w-full"></div>
+                        </div>}
+                      </>
+                    ))
+                  }
 
                 </div>
-                <button className="frontPageButton1 mb-4" style={{ marginTop: "0px" }} onClick={show}>Add Wallet</button>
+
+                {error && (
+                  <p style={{ color: "red" }}>Error: {error}</p>
+                )}
+
               </div>
-            )}
+              <button className="frontPageButton1 mb-4" style={{ marginTop: "0px" }} onClick={show}>Add Wallet</button>
+            </div>
+          )}
+          {showPopupdiv && (
+            <div className="absolute bottom-0 bg-black bg-opacity-50 z-50 flex items-end">
+              <div className="content bg-black w-full max-w-full border-stone-200 max-h-[45vh]">
+                <div className="bg-black text-white p-6 slide-up">
+                  <div className="flex items-center mb-6">
+                    <ArrowLeftOutlined className="text-lg mr-4" onClick={closePopup} />
+                    <h3 className="text-sm font-bold ml-10 ">Import Existing Wallet</h3>
+                  </div>
 
-          </div>
-          <div className="flex items-center justify-center px-4 w-full border-t-[1px] border-[#1D1D1D] gap-[35px] py-6 mt-auto sticky bottom-0 z-[10] bg-black">
-            {
-              tab === 4 ? <img src={assetfill} alt={"Assets"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(4)} /> : <img src={asset} alt={"Assets"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(4)} />
-            }
-            {tab === 5 ? <img src={filltransactionImg} alt={"Transaction"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(5)} /> : <img src={transactionImg} alt={"Transaction"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(5)} />}
-            {
-              tab === 3 ? <img src={fillswap} alt={"Swap"} className="w-[25px] h-[25px] cursor-pointer" onClick={() => setTab(3)} /> : <img src={swap3} alt={"Swap"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(3)} />
-            }
-            <img src={sendb} alt={"Send"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(1)} />
-            <img src={recieveb} alt={"Recieve"} className="w-[32px] h-[32px] cursor-pointer bottomsvg" onClick={() => setTab(6)} />
-          </div>
-        </div>
-      </>}
-      {tab !== 4 && tab !== null && <div className="bg-black p-5 h-[600px] overflow-y-auto scrollbar-none w-[360px]">
-        {tab !== 2 && <BackArrow setTab={setTab} />}
-        {
-          tab === 2 ? <SecurityTab wallet={wallet} accountkeys={accountkeys} authTab={authTab} setTab={setTab} /> : tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
-            tab === 5 ? <TransactionHistory wallet={wallet} selectedChain={selectedChain} /> :
-              tab === 3 ? <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} /> :
-                tab === 6 && <ReceiveTab wallet={wallet} />
-        }
-      </div>}
-      {showPopupdiv && (
-        <div className="absolute top-0 bg-black bg-opacity-50 z-50 flex items-end mt-64">
-          <div className="content bg-black w-full max-w-full border-stone-200 max-h-[45vh]">
-            <div className="bg-black text-white p-6 slide-up">
-              <div className="flex items-center mb-6">
-                <ArrowLeftOutlined className="text-lg mr-4" onClick={closePopup} />
-                <h3 className="text-sm font-bold ml-10 ">Import Existing Wallet</h3>
-              </div>
+                  <div className="space-y-4">
+                    <button
+                      onClick={() => recover()}
+                      className="frontPageButton2"
+                      type="default"
+                    >
+                      By Private Key
+                    </button>
+                    <Button
+                      onClick={(e) => recoverseed()}
+                      className="frontPageButton1 border-purple-950 font-semibold"
+                      type="default"
+                    >
+                      By Mnemonic Phrase
+                    </Button>
 
-              <div className="space-y-4">
-                <button
-                  onClick={() => recover()}
-                  className="frontPageButton2"
-                  type="default"
-                >
-                  By Private Key
-                </button>
-                <Button
-                  onClick={(e) => recoverseed()}
-                  className="frontPageButton1 border-purple-950 font-semibold"
-                  type="default"
-                >
-                  By Mnemonic Phrase
-                </Button>
-
-                <button
-                  onClick={() => create()}
-                  className="frontPageButton3"
-                  type="primary"
-                >
-                  Create a New Wallet
-                </button>
+                    <button
+                      onClick={() => create()}
+                      className="frontPageButton3"
+                      type="primary"
+                    >
+                      Create a New Wallet
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          )}
+          <BottomNav setTab={setTab} tab={tab} />
+
         </div>
-      )}
+      </>}
+      {tab !== 4 && tab !== null && <div className="bg-black h-[600px] overflow-y-auto scrollbar-none w-[360px] relative">
+        <div className="p-5 h-full overflow-y-auto scrollbar-none mb-4">
+          {tab !== 2 && <BackArrow setTab={setTab} tab={tab} token={token} />}
+
+          {
+            tab === 2 ? <SecurityTab wallet={wallet} accountkeys={accountkeys} authTab={authTab} setTab={setTab} /> : tab === 1 ? <SendTab wallet={wallet} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} transactionHistory={transactionData} /> :
+              tab === 5 ? <TransactionHistory wallet={wallet} selectedChain={selectedChain} /> :
+                tab === 3 ? <SwapTab wallet={wallet} tokens={tokens} balance={balance} selectedChain={selectedChain} getAccountTokens={getAccountTokens} /> :
+                  tab === 6 ? <ReceiveTab wallet={wallet} /> :
+                    tab === 7 && <AssetDetail token={token} wallet={wallet} selectedChain={selectedChain} />
+          }
+        </div>
+        {
+          tab !== 2 && <BottomNav setTab={setTab} tab={tab} />
+        }
+      </div>
+      }
+
     </>
 
   );
