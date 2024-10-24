@@ -21,8 +21,8 @@ function AssetDetail({ token, wallet, selectedChain }) {
                 <p className="text-[#474747] text-sm font-medium font-urbanist">Your Balance</p>
                 <div className="w-full flex justify-between">
                     <div className="">
-                        <div className="text-white text-base font-medium font-urbanist leading-[18.34px]">3.50 SOL</div>
-                        <div className="text-[#a7a7a7] text-sm font-light font-urbanist leading-[18.34px]">$525.50</div>
+                        <div className="text-white text-base font-medium font-urbanist leading-[18.34px]">0.00 SOL</div>
+                        <div className="text-[#a7a7a7] text-sm font-light font-urbanist leading-[18.34px]">$0.00</div>
                     </div>
                     <img className="w-[45px] h-[45px]" src={
                         token?.symbol === "SOL"

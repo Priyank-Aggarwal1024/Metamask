@@ -20,7 +20,7 @@ function TransactionHistory({ wallet, selectedChain }) {
                             <li key={index} className="">
                                 <div
                                     onClick={() => handleItemClick(index)}
-                                    className="flex items-center gap-2"
+                                    className="flex items-center gap-2 cursor-pointer"
                                 >
                                     <div className="min-w-9 h-9 rounded-full bg-[#080808] flex justify-center items-center">
                                         <img src={item.type === "Received" || item.type === "Swap In" ? recieve : item.type === "Sent" ? sent : bought} alt="asset" className="w-4 h-4" />

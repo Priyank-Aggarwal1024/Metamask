@@ -6,9 +6,7 @@ import BackHome from "./BackHome";
 function Enterpass({ password, setPassword, confirmpassword, setConfirmPassword }) {
     const [error, setError] = useState("");
     const [pass1, setPass1] = useState("")
-    const [pass2, setPass2] = useState("")
-    const [hide1, setHide1] = useState(true)
-    const [hide2, setHide2] = useState(true)
+    const [pass2, setPass2] = useState("");
     const navigate = useNavigate();
 
 
@@ -32,7 +30,7 @@ function Enterpass({ password, setPassword, confirmpassword, setConfirmPassword 
             setError("");
             setPassword(pass2)
             setConfirmPassword(pass2)
-            navigate("/confirmwallet");
+            navigate("/entername");
         }
     }
 
@@ -40,10 +38,10 @@ function Enterpass({ password, setPassword, confirmpassword, setConfirmPassword 
         <>
             <BackHome />
             <div className="content bg-black flex flex-col justify-between w-full">
-                <div>
+                <div className="w-full px-[25px]">
 
-                    <h1 className="text-white font-sans text-2xl mt-5 font-semibold w-full pl-4 text-start">Set up password</h1>
-                    <h3 className="text-gray-500 font-sans text-xs w-full mt-2 pl-4 text-start">Enhance security by setting up your password</h3>
+                    <h1 className="text-white font-sans text-2xl mt-5 font-semibold w-full text-start">Set up password</h1>
+                    <h3 className="text-gray-500 font-sans text-xs w-full mt-2 text-start">Enhance security by setting up your password</h3>
 
                     <Input.Password
                         value={pass1}
@@ -62,10 +60,10 @@ function Enterpass({ password, setPassword, confirmpassword, setConfirmPassword 
                     {error && <p className="text-red-500 mt-2">{error}</p>}
 
                 </div>
-                <div className="mt-auto mb-6 w-full">
+                <div className="mt-auto mb-6 w-full px-[25px]">
 
                     <button
-                        className="frontPageButton1"
+                        className="frontPageButton1 w-full"
                         type="primary"
                         onClick={handleSubmit}
                         disabled={pass1 === "" && pass2 === ""}

@@ -123,25 +123,6 @@ function SecurityTab({ wallet, accountkeys, authTab, setTab }) {
     <div className="">
       {
         !isVisiblePin && !qrCodeUrl && <>
-          {/* {
-            innerTab === 1 && (<>
-              <div className="flex text-white items-center ml-2 -space-x-5"> <img src={auth} alt="" className="w-24" /> <p className=" text-lg font-bold"> Google Authentication </p>  </div>
-
-              <Button className="frontPageButton1" onClick={generate2FA}>Generate 2FA QR Code</Button>
-            </>)
-          }
-          {
-            innerTab === 2 && <p className="mt-6">
-              <Button className="frontPageButton1" onClick={generatePin}>Setup Transaction PIN</Button>
-            </p>
-          }
-           */}
-          {/* {
-            innerTab === 3 && <p>
-
-              <Button className="frontPageButton1" onClick={revealKey}>Reveal PrivateKey</Button>
-            </p>
-          } */}
           {key && (
             <div className="">
               <img className="pb-4 cursor-pointer" alt="Back" src={back} onClick={() => {

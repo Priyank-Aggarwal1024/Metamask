@@ -11,6 +11,7 @@ import Initial from "./components/Initial"
 import RecoverAccountSeed from "./components/seedPhrase";
 import Enterpass from "./components/Enterpass";
 import WatchWallet from "./components/wachWallet";
+import WalletName from "./components/WalletName";
 
 
 
@@ -19,6 +20,7 @@ function App() {
   const [seedPhrase, setSeedPhrase] = useState(null);
   const [selectedChain, setSelectedChain] = useState("devnet");
   const [password, setPassword] = useState("");
+  const [walletName, setWalletName] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [authTab, setAuthTab] = useState(null);
 
@@ -75,6 +77,15 @@ function App() {
                   setPassword={setPassword}
                   confirmpassword={confirmpassword}
                   setConfirmPassword={setConfirmPassword}
+                />
+              }
+            />
+            <Route
+              path="/entername"
+              element={
+                <WalletName
+                  walletName={walletName}
+                  setWalletName={setWalletName}
                 />
               }
             />

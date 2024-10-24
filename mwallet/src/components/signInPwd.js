@@ -47,7 +47,7 @@ function SignInPwd({ setWallet, setSeedPhrase, setPassword }) {
     return (
         <>
             <BackHome />
-            <div className="content bg-black pt-4">
+            <div className="content bg-black pt-4 px-[25px]">
                 <div className="mnemonic">
                     <BulbOutlined style={{ fontSize: "20px", padding: "10px" }} />
                     <div>

@@ -19,8 +19,8 @@ button {
 }
 
 .frontPageButton1 {
-  width: 90%;
   margin-top: 20px;
+  width: 100%;
   height: 45px;
   background-color: #722ae8;
   color: white;
@@ -79,7 +79,7 @@ button {
 }
 
 .frontPageButton2 {
-  width: 90%;
+  width: 100%;
   margin-top: 20px;
   height: 45px;
   background-color: #1d1d1d;
@@ -93,7 +93,7 @@ button {
 }
 
 .frontPageButton3 {
-  width: 90%;
+  width: 100%;
   margin-top: 20px;
   height: 45px;
   background-color: #1d1d1d;

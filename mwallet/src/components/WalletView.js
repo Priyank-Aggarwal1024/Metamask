@@ -508,7 +508,9 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                 )}
 
               </div>
-              <button className="frontPageButton1 mb-4" style={{ marginTop: "0px" }} onClick={show}>Add Wallet</button>
+              <div className="px-[25px]">
+                <button className="frontPageButton1 w-full mb-4" style={{ marginTop: "0px" }} onClick={show}>Add Wallet</button>
+              </div>
             </div>
           )}
           {showPopupdiv && (
@@ -523,14 +525,14 @@ function WalletView({ wallet, setWallet, setSeedPhrase, selectedChain, password,
                   <div className="space-y-4">
                     <button
                       onClick={() => recover()}
-                      className="frontPageButton2"
+                      className="frontPageButton2 w-full"
                       type="default"
                     >
                       By Private Key
                     </button>
                     <Button
                       onClick={(e) => recoverseed()}
-                      className="frontPageButton1 border-purple-950 font-semibold"
+                      className="frontPageButton1 w-full border-purple-950 font-semibold"
                       type="default"
                     >
                       By Mnemonic Phrase

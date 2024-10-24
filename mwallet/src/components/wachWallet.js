@@ -48,12 +48,12 @@ function WatchWallet({ setWallet, setSeedPhrase, setPassword }) {
     return (
         <>
             <BackHome />
-            <div className="content bg-black pt-4">
-                <div className="flex-col justify-start items-start gap-2 inline-flex w-full text-start px-5 pt-4">
+            <div className="content bg-black pt-4 px-[25px]">
+                <div className="flex-col justify-start items-start gap-2 inline-flex w-full text-start pt-4">
                     <div className="text-white text-[22px] font-semibold font-urbanist">Watch Wallet</div>
                     <div className="text-[#474747] text-[15px] font-light font-urbanist leading-[21px]">Fill the details below to track wallet</div>
                 </div>
-                <div className="px-4 w-full">
+                <div className=" w-full">
 
                     <div className="text-[#a8a8a8] text-[13px] font-normal font-urbanist leading-[18.43px] text-start mt-4 pb-2">Wallet Name</div>
 

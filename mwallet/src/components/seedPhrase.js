@@ -129,7 +129,7 @@ function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword })
           </div>
         </div>
       ) : (
-        <div className="content pt-4">
+        <div className="content pt-4 px-[25px]">
           <div className="mnemonic">
             <BulbOutlined style={{ fontSize: "20px" }} />
             <div>
@@ -156,11 +156,11 @@ function RecoverAccountSeed({ setWallet, setSeedPhrase, password, setPassword })
           </>
           )}
           {!showpassdiv && (<>
-            <div className="flex-col justify-start items-start gap-2 inline-flex w-full text-start px-5 pt-4">
+            <div className="flex-col justify-start items-start gap-2 inline-flex w-full text-start pt-4">
               <div className="text-white text-[22px] font-semibold font-urbanist">Mnemonic Phrase</div>
               <div className="text-[#474747] text-[15px] font-light font-urbanist leading-[21px]">Enter your mnemonic phrase to import wallet</div>
             </div>
-            <div className="grid grid-cols-3 gap-[7px] py-4 w-full px-4">
+            <div className="grid grid-cols-3 gap-[7px] py-4 w-full">
               {
                 arr.map((item, idx) => <div className="py-2.5 px-2  bg-[#080808]  border-[0.8px] border-[#1D1D1D] rounded-[8px] flex gap-1" key={idx}>
                   <span className="block text-[#474747] text-[12px] ">{item}.</span>

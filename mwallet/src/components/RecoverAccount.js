@@ -131,7 +131,7 @@ function RecoverAccountSecretKey({ setWallet, setSeedPhrase, password, setPasswo
               iconRender={() => (<img src={view} alt="Hide Unhide button" />)}
             />
             {error && <p className="text-red-500 mt-2">{error}</p>}
-            <button className="frontPageButton1" onClick={showdiv} >Set Password</button>
+            <button className="frontPageButton1 w-full" onClick={showdiv} >Set Password</button>
           </>
           )}
 
@@ -154,14 +154,17 @@ function RecoverAccountSecretKey({ setWallet, setSeedPhrase, password, setPasswo
                   Only solana network is support
                 </div>
               </div>
-              <Button
-                disabled={typedSeed.trim().length === 0 || !password}
-                className="frontPageButton1"
-                type="primary"
-                onClick={() => recoverWallet()}
-              >
-                Import
-              </Button>
+              <div className="px-[25px] w-full">
+
+                <Button
+                  disabled={typedSeed.trim().length === 0 || !password}
+                  className="frontPageButton1 w-full"
+                  type="primary"
+                  onClick={() => recoverWallet()}
+                >
+                  Import
+                </Button>
+              </div>
             </>
           )}
           {nonValid && <p style={{ color: "red" }}>Invalid Secret Key</p>}

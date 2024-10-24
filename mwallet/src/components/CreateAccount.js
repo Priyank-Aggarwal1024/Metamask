@@ -92,10 +92,10 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
           </div>
         </div>
       ) : (
-        <div className="content bg-black pt-4">
-          <h1 className="text-white font-sans text-2xl mt-5 font-semibold w-full pl-4 text-start">Mnemonic Phrase</h1>
-          <h3 className="text-[#474747] font-sans text-xs w-full mt-2 pl-4 text-start">The phrase is the only way for you to recover your wallet do not share with anyone</h3>
-          <div className="grid grid-cols-3 gap-[7px] py-4 w-full px-4">
+        <div className="content bg-black pt-4 px-[25px]">
+          <h1 className="text-white font-sans text-2xl mt-5 font-semibold w-full  text-start">Mnemonic Phrase</h1>
+          <h3 className="text-[#474747] font-sans text-xs w-full mt-2  text-start">The phrase is the only way for you to recover your wallet do not share with anyone</h3>
+          <div className="grid grid-cols-3 gap-[7px] py-4 w-full">
             {
               arr?.map((item, idx) => <div className="py-2.5 px-2  bg-[#080808]  border-[0.8px] border-[#1D1D1D] rounded-[8px] flex gap-1 items-center" key={idx}>
                 <span className="block text-[#474747] text-[12px] ">{idx + 1}.</span>
@@ -105,7 +105,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
             }
           </div>
           <Button
-            className="frontPageButton1"
+            className="frontPageButton1 w-full"
             type="default"
             onClick={handleCopySeedphrase}
             hidden={!newSeedPhrase}
@@ -114,7 +114,7 @@ function CreateAccount({ setWallet, setSeedPhrase, password, setPassword, confir
             {copyText}
           </Button>
           <Button
-            className="frontPageButton1"
+            className="frontPageButton1 w-full"
             type="default"
             onClick={() => setWalletAndMnemonic()}
             disabled={!newSeedPhrase}

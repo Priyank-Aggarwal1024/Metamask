@@ -58,7 +58,7 @@ const App = () => {
 
         <Link to="/home">
           <button
-            className={`frontPageButton1 ${termsAccepted ? "bg-gray-500" : "bg-gray-800 text-gray-600 cursor-not-allowed"
+            className={`frontPageButton1 w-full ${termsAccepted ? "bg-gray-500" : "bg-gray-800 text-gray-600 cursor-not-allowed"
               }`}
             disabled={!termsAccepted}
           >
